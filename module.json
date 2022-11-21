@@ -1,0 +1,21 @@
+{
+    "id": "move-content",
+    "name": "Move Content",
+    "description": "Transfer all content from one user to another.",
+    "keywords": ["move", "transfer", "content"],
+    "version": "1.0",
+    "humhub": {
+        "minVersion": "1.12"
+    },
+    "homepage": "https://github.com/cuzy-app/humhub-modules-move-content",
+    "authors": [
+        {
+            "name": "Marc FARRE",
+            "homepage": "https://marc.fun",
+            "role": "Developer"
+        }
+    ],
+    "screenshots": [
+        "resources/screen_1.png"
+    ]
+}
