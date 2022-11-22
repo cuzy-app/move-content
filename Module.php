@@ -1,6 +1,6 @@
 <?php
 /**
- * Move Content
+ * Move content
  * @link https://www.cuzy.app
  * @license https://www.cuzy.app/cuzy-license
  * @author [Marc FARRE](https://marc.fun)
@@ -29,7 +29,7 @@ class Module extends \humhub\components\Module
      */
     public function getName()
     {
-        return Yii::t('MoveContentModule.config', 'Move Content');
+        return Yii::t('MoveContentModule.base', 'Move content');
     }
 
     /**
@@ -37,6 +37,6 @@ class Module extends \humhub\components\Module
      */
     public function getDescription()
     {
-        return Yii::t('MoveContentModule.config', 'Transfer all content from one user to another.');
+        return Yii::t('MoveContentModule.base', 'Transfer the content from a user to another');
     }
 }

@@ -1,7 +1,7 @@
 {
     "id": "move-content",
-    "name": "Move Content",
-    "description": "Transfer all content from one user to another.",
+    "name": "Move content",
+    "description": "Transfer the content from a user to another",
     "keywords": ["move", "transfer", "content"],
     "version": "1.0",
     "humhub": {

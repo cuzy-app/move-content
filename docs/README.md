@@ -1,7 +1,7 @@
-# Move Content
+# Move content
 
-Transfer all content from one user to another.
-
+Transfer the content from a user to another.
+Planned for a future version: transfer the content from a space to another.
 
 ## Overview
 
@@ -12,4 +12,4 @@ Use cases:
 
 ## Administration
 
-- Go to `Administration` -> `Users` -> `Move Content`
+- Go to `Administration` -> `Users` -> `Move content`
