@@ -16,6 +16,7 @@ use humhub\modules\content\components\ContentActiveRecord;
 use humhub\modules\content\models\Content;
 use humhub\modules\content\models\ContentTag;
 use humhub\modules\eventsManager\models\EventSpeaker;
+use humhub\modules\like\models\Like;
 use humhub\modules\queue\ActiveJob;
 use humhub\modules\survey\models\Answer;
 use humhub\modules\user\models\User;
@@ -149,7 +150,7 @@ class MoveUserContentJob extends ActiveJob implements RetryableJobInterface
         $condition = ['created_by' => $sourceUser->id];
         $contentAddonQueries = [
             Comment::find()->where($condition),
-//            Like::find()->where($condition), // waiting for https://github.com/humhub/humhub/pull/5947 - Then, uncomment and change the minimum Humhub version to 1.13
+            Like::find()->where($condition),
         ];
         if (class_exists(Answer::class)) {
             $contentAddonQueries[] = Answer::find()->where($condition);

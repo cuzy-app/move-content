@@ -3,9 +3,9 @@
     "name": "Move content",
     "description": "Transfer the content from a user to another",
     "keywords": ["move", "transfer", "content"],
-    "version": "1.0.1",
+    "version": "1.0.2",
     "humhub": {
-        "minVersion": "1.12"
+        "minVersion": "1.13"
     },
     "homepage": "https://github.com/cuzy-app/humhub-modules-move-content",
     "authors": [
