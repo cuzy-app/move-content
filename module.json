@@ -3,7 +3,7 @@
     "name": "Move content",
     "description": "Transfer the content from a user to another",
     "keywords": ["move", "transfer", "content"],
-    "version": "1.0",
+    "version": "1.0.1",
     "humhub": {
         "minVersion": "1.12"
     },

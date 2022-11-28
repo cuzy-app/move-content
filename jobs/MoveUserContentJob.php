@@ -11,9 +11,14 @@ namespace humhub\modules\moveContent\jobs;
 use humhub\modules\activity\models\Activity;
 use humhub\modules\cfiles\models\File;
 use humhub\modules\cfiles\models\Folder;
+use humhub\modules\comment\models\Comment;
 use humhub\modules\content\components\ContentActiveRecord;
 use humhub\modules\content\models\Content;
+use humhub\modules\content\models\ContentTag;
+use humhub\modules\eventsManager\models\EventSpeaker;
+use humhub\modules\like\models\Like;
 use humhub\modules\queue\ActiveJob;
+use humhub\modules\survey\models\Answer;
 use humhub\modules\user\models\User;
 use Yii;
 use yii\db\IntegrityException;
@@ -75,6 +80,17 @@ class MoveUserContentJob extends ActiveJob implements RetryableJobInterface
             return;
         }
 
+        $this->moveContent($sourceUser, $targetUser);
+        $this->moveContentAddons($sourceUser, $targetUser);
+    }
+
+    /**
+     * @param User $sourceUser
+     * @param User $targetUser
+     * @return void
+     */
+    protected function moveContent(User $sourceUser, User $targetUser)
+    {
         $contentQuery = Content::find()
             ->where(['created_by' => $sourceUser->id])
             ->orWhere(['contentcontainer_id' => $sourceUser->contentcontainer_id]);
@@ -106,11 +122,12 @@ class MoveUserContentJob extends ActiveJob implements RetryableJobInterface
                     && $this->_content->container->moduleManager->isEnabled($this->_model->getModuleId())
                 ) {
                     $this->_content->contentcontainer_id = $targetUser->contentcontainer_id;
-                    $this->changeContentOwner($targetUser);
+                    $this->changeContentOwnerAndSave($targetUser);
+                    $this->_model->afterMove($targetUser);
                 }
             } // The content is global or in a space
             else {
-                $this->changeContentOwner($targetUser);
+                $this->changeContentOwnerAndSave($targetUser);
             }
         }
 
@@ -122,14 +139,56 @@ class MoveUserContentJob extends ActiveJob implements RetryableJobInterface
     }
 
     /**
+     * @param User $sourceUser
      * @param User $targetUser
      * @return void
      */
-    protected function changeContentOwner(User $targetUser)
+    protected function moveContentAddons(User $sourceUser, User $targetUser)
+    {
+        $nbContentAddonsMoved = 0;
+        $errors = [];
+
+        $condition = ['created_by' => $sourceUser->id];
+        $contentAddonQueries = [
+            Comment::find()->where($condition),
+            Like::find()->where($condition),
+        ];
+        if (class_exists(Answer::class)) {
+            $contentAddonQueries[] = Answer::find()->where($condition);
+        }
+        if (class_exists(EventSpeaker::class)) {
+            $contentAddonQueries[] = EventSpeaker::find()->where($condition);
+        }
+
+        foreach ($contentAddonQueries as $contentAddonQuery) {
+            foreach ($contentAddonQuery->each() as $contentAddon) {
+                $contentAddon->created_by = $targetUser->id;
+                if ($contentAddon->save()) {
+                    $nbContentAddonsMoved++;
+                } else {
+                    $this->_errors[] = 'Content addon ID ' . $contentAddon->id . ': ' . implode(' ', $contentAddon->getErrorSummary(true));
+                }
+            }
+        }
+
+        // Log result
+        Yii::warning($nbContentAddonsMoved . ' content addons of user "' . $sourceUser->username . '" have been transferred to user "' . $targetUser->username . '"', 'move-content');
+        if ($errors) {
+            Yii::error('Errors while transferring content addons from user "' . $sourceUser->username . '" to user "' . $targetUser->username . '": ' . implode(' | ', $errors), 'move-content');
+        }
+    }
+
+    /**
+     * @param User $targetUser
+     * @return void
+     */
+    protected function changeContentOwnerAndSave(User $targetUser)
     {
         $this->_content->created_by = $targetUser->id;
 
         if ($this->_content->save()) {
+            ContentTag::deleteContentRelations($this->_content, false);
+            $this->_model->populateRelation('content', $this->_content);
             if (isset($this->_model->created_by)) {
                 $this->_model->created_by = $targetUser->id;
                 $scenarios = $this->_model->scenarios();
