@@ -6,5 +6,5 @@ return [
     'Source user' => 'ソース ユーザー',
     'Target user' => '対象ユーザー',
     'The user content transfer has been added to the queue' => 'ユーザー コンテンツ転送がキューに追加されました',
-    'Transfer the content from a user to another' => 'ユーザーから別のユーザーへのコンテンツの転送',
+    'Transfer the content from a user to another' => 'あるユーザーから別のユーザーにすべてのコンテンツを転送します。',
 ];
