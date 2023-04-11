@@ -1,6 +1,7 @@
 # Move content
 
-Transfer the content from a user to another.
+**Transfer the content from a user to another.**
+
 Planned for a future version: transfer the content from a space to another.
 
 ## Overview
@@ -19,7 +20,7 @@ Use cases:
 
 This module is free, but is the result of a lot of work for the design and maintenance over time.
 
-If it's useful to you, please consider [making a donation](https://www.cuzy.app/checkout/donate/) or [participating in the code](https://github.com/cuzy-app/humhub-modules-name-parser). Thanks!
+If it's useful to you, please consider [making a donation](https://www.cuzy.app/checkout/donate/) or [participating in the code](https://github.com/cuzy-app/humhub-modules-move-content). Thanks!
 
 
 ## Repository

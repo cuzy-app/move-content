@@ -9,6 +9,7 @@
 namespace humhub\modules\moveContent;
 
 use Yii;
+use yii\helpers\Url;
 
 class Module extends \humhub\components\Module
 {
@@ -38,5 +39,13 @@ class Module extends \humhub\components\Module
     public function getDescription()
     {
         return Yii::t('MoveContentModule.base', 'Transfer the content from a user to another');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getConfigUrl()
+    {
+        return Url::to(['/move-content/config']);
     }
 }
