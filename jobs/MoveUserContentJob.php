@@ -215,6 +215,8 @@ class MoveUserContentJob extends ActiveJob implements RetryableJobInterface
      */
     public function canRetry($attempt, $error)
     {
-        return true;
+        $errorMessage = $error ? $error->getMessage() : '';
+        Yii::error('Error with user content moving job: ' . $errorMessage, 'move-content');
+        return false;
     }
 }
