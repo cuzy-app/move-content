@@ -18,6 +18,7 @@ use humhub\modules\content\models\ContentTag;
 use humhub\modules\eventsManager\models\EventSpeaker;
 use humhub\modules\like\models\Like;
 use humhub\modules\queue\ActiveJob;
+use humhub\modules\queue\interfaces\ExclusiveJobInterface;
 use humhub\modules\survey\models\Answer;
 use humhub\modules\user\models\User;
 use Yii;
@@ -25,7 +26,7 @@ use yii\db\IntegrityException;
 use yii\queue\RetryableJobInterface;
 
 
-class MoveUserContentJob extends ActiveJob implements RetryableJobInterface
+class MoveUserContentJob extends ActiveJob implements ExclusiveJobInterface, RetryableJobInterface
 {
     /**
      * @var string User guid
@@ -211,12 +212,20 @@ class MoveUserContentJob extends ActiveJob implements RetryableJobInterface
     }
 
     /**
-     * @inheritDoc for RetryableJobInterface
+     * @inheritDoc
      */
     public function canRetry($attempt, $error)
     {
         $errorMessage = $error ? $error->getMessage() : '';
         Yii::error('Error with user content moving job: ' . $errorMessage, 'move-content');
         return false;
+    }
+
+    /**
+     * @inerhitdoc
+     */
+    public function getExclusiveJobId()
+    {
+        return 'move-content.' . static::class . '.' . $this->sourceUserGuid;
     }
 }
