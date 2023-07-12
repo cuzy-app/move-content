@@ -223,9 +223,10 @@ class MoveUserContentJob extends ActiveJob implements ExclusiveJobInterface, Ret
 
     /**
      * @inerhitdoc
+     * Must not exceed to 50 chars
      */
     public function getExclusiveJobId()
     {
-        return 'move-content.' . static::class . '.' . $this->sourceUserGuid;
+        return 'move-content.user.' . md5($this->sourceUserGuid);
     }
 }
