@@ -97,7 +97,7 @@ class MoveUserContentJob extends ActiveJob implements ExclusiveJobInterface, Ret
             ->orWhere(['contentcontainer_id' => $sourceUser->contentcontainer_id]);
 
         /** @var Content $content */
-        foreach ($contentQuery->each(1000) as $content) {
+        foreach ($contentQuery->each(500) as $content) {
 
             // Get and check Content and Model
             $this->_content = $content;
