@@ -97,7 +97,7 @@ class MoveUserContentJob extends ActiveJob implements ExclusiveJobInterface, Ret
             ->orWhere(['contentcontainer_id' => $sourceUser->contentcontainer_id]);
 
         /** @var Content $content */
-        foreach ($contentQuery->each() as $content) {
+        foreach ($contentQuery->each(1000) as $content) {
 
             // Get and check Content and Model
             $this->_content = $content;
@@ -161,7 +161,7 @@ class MoveUserContentJob extends ActiveJob implements ExclusiveJobInterface, Ret
         }
 
         foreach ($contentAddonQueries as $contentAddonQuery) {
-            foreach ($contentAddonQuery->each() as $contentAddon) {
+            foreach ($contentAddonQuery->each(1000) as $contentAddon) {
                 $contentAddon->created_by = $targetUser->id;
                 if ($contentAddon->save()) {
                     $nbContentAddonsMoved++;
