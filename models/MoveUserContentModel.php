@@ -53,6 +53,17 @@ class MoveUserContentModel extends Model
         ];
     }
 
+    public function beforeValidate()
+    {
+        if (is_array($this->sourceUserGuid)) {
+            $this->sourceUserGuid = reset($this->sourceUserGuid);
+        }
+        if (is_array($this->targetUserGuid)) {
+            $this->targetUserGuid = reset($this->targetUserGuid);
+        }
+        return parent::beforeValidate();
+    }
+
     /**
      * @return bool
      */

@@ -23,8 +23,18 @@ use humhub\widgets\Button;
     <h4><?= $title ?></h4>
 
     <?php $form = ActiveForm::begin(); ?>
-    <?= $form->field($model, 'sourceUserGuid')->widget(UserPickerField::class) ?>
-    <?= $form->field($model, 'targetUserGuid')->widget(UserPickerField::class) ?>
+    <?= UserPickerField::widget([
+        'model' => $model,
+        'form' => $form,
+        'attribute' => 'sourceUserGuid',
+        'maxSelection' => 1,
+    ]) ?>
+    <?= UserPickerField::widget([
+        'model' => $model,
+        'form' => $form,
+        'attribute' => 'targetUserGuid',
+        'maxSelection' => 1,
+    ]) ?>
     <?= $form->field($model, 'moveProfileContent')->checkbox() ?>
     <?= Button::save()->submit() ?>
     <?php ActiveForm::end(); ?>

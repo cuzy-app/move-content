@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.1.1 (November 22, 2023)
+--------------------
+- Fix: Crash when submitting the form allowing to select the users
+
 1.1.0 (July 25, 2023)
 --------------------
 - Enh: Added config page (for admins)
