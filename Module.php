@@ -38,7 +38,7 @@ class Module extends \humhub\components\Module
      */
     public function getDescription()
     {
-        return Yii::t('MoveContentModule.base', 'Transfer the content from a user to another');
+        return Yii::t('MoveContentModule.base', 'Transfer content, comments and likes from one user or space to another.');
     }
 
     /**

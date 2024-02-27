@@ -17,57 +17,35 @@ use humhub\modules\content\models\Content;
 use humhub\modules\content\models\ContentTag;
 use humhub\modules\eventsManager\models\EventSpeaker;
 use humhub\modules\like\models\Like;
-use humhub\modules\queue\ActiveJob;
-use humhub\modules\queue\interfaces\ExclusiveJobInterface;
+use humhub\modules\queue\LongRunningActiveJob;
+use humhub\modules\reaction\models\Reaction;
 use humhub\modules\survey\models\Answer;
 use humhub\modules\user\models\User;
 use Yii;
 use yii\db\IntegrityException;
-use yii\queue\RetryableJobInterface;
 
 
-class MoveUserContentJob extends ActiveJob implements ExclusiveJobInterface, RetryableJobInterface
+class MoveUserContentJob extends LongRunningActiveJob
 {
     /**
      * @var string User guid
      */
     public $sourceUserGuid;
-
     /**
      * @var string User guid
      */
     public $targetUserGuid;
-
-    /**
-     * @var bool
-     */
-    public $moveProfileContent = false;
-
+    public bool $moveProfileContent = false;
     /**
      * @var Content
      */
     protected $_content;
-
-    /**
-     * @var Content
-     */
-    protected $_model;
-
     /**
      * @var ContentActiveRecord
      */
-    protected $_nbContentMoved = 0;
-
-    /**
-     * @var array
-     */
-    protected $_errors = [];
-
-    /**
-     * @inhertidoc
-     * @var int maximum 1 hour
-     */
-    private $maxExecutionTime = 60 * 60;
+    protected $_model;
+    protected int $_nbContentMoved = 0;
+    protected array $_errors = [];
 
     /**
      * @inheritdoc
@@ -101,6 +79,7 @@ class MoveUserContentJob extends ActiveJob implements ExclusiveJobInterface, Ret
 
             // Get and check Content and Model
             $this->_content = $content;
+            $this->_model = null;
             try {
                 $this->_model = $this->_content->getModel();
             } catch (IntegrityException $e) {
@@ -139,46 +118,6 @@ class MoveUserContentJob extends ActiveJob implements ExclusiveJobInterface, Ret
     }
 
     /**
-     * @param User $sourceUser
-     * @param User $targetUser
-     * @return void
-     */
-    protected function moveContentAddons(User $sourceUser, User $targetUser)
-    {
-        $nbContentAddonsMoved = 0;
-        $errors = [];
-
-        $condition = ['created_by' => $sourceUser->id];
-        $contentAddonQueries = [
-            Comment::find()->where($condition),
-            Like::find()->where($condition),
-        ];
-        if (class_exists(Answer::class)) {
-            $contentAddonQueries[] = Answer::find()->where($condition);
-        }
-        if (class_exists(EventSpeaker::class)) {
-            $contentAddonQueries[] = EventSpeaker::find()->where($condition);
-        }
-
-        foreach ($contentAddonQueries as $contentAddonQuery) {
-            foreach ($contentAddonQuery->each(1000) as $contentAddon) {
-                $contentAddon->created_by = $targetUser->id;
-                if ($contentAddon->save()) {
-                    $nbContentAddonsMoved++;
-                } else {
-                    $this->_errors[] = 'Content addon ID ' . $contentAddon->id . ': ' . implode(' ', $contentAddon->getErrorSummary(true));
-                }
-            }
-        }
-
-        // Log result
-        Yii::warning($nbContentAddonsMoved . ' content addons of user "' . $sourceUser->username . '" have been transferred to user "' . $targetUser->username . '"', 'move-content');
-        if ($errors) {
-            Yii::error('Errors while transferring content addons from user "' . $sourceUser->username . '" to user "' . $targetUser->username . '": ' . implode(' | ', $errors), 'move-content');
-        }
-    }
-
-    /**
      * @param User $targetUser
      * @return void
      */
@@ -204,11 +143,46 @@ class MoveUserContentJob extends ActiveJob implements ExclusiveJobInterface, Ret
     }
 
     /**
-     * @inheritDoc
+     * @param User $sourceUser
+     * @param User $targetUser
+     * @return void
      */
-    public function getTtr()
+    protected function moveContentAddons(User $sourceUser, User $targetUser)
     {
-        return $this->maxExecutionTime;
+        $nbContentAddonsMoved = 0;
+        $errors = [];
+
+        $condition = ['created_by' => $sourceUser->id];
+        $contentAddonQueries = [
+            Comment::find()->where($condition),
+            Like::find()->where($condition),
+        ];
+        if (class_exists(Answer::class)) {
+            $contentAddonQueries[] = Answer::find()->where($condition);
+        }
+        if (class_exists(Reaction::class)) {
+            $contentAddonQueries[] = Reaction::find()->where($condition);
+        }
+        if (class_exists(EventSpeaker::class)) {
+            $contentAddonQueries[] = EventSpeaker::find()->where($condition);
+        }
+
+        foreach ($contentAddonQueries as $contentAddonQuery) {
+            foreach ($contentAddonQuery->each(1000) as $contentAddon) {
+                $contentAddon->created_by = $targetUser->id;
+                if ($contentAddon->save()) {
+                    $nbContentAddonsMoved++;
+                } else {
+                    $this->_errors[] = 'Content addon ID ' . $contentAddon->id . ': ' . implode(' ', $contentAddon->getErrorSummary(true));
+                }
+            }
+        }
+
+        // Log result
+        Yii::warning($nbContentAddonsMoved . ' content addons of user "' . $sourceUser->username . '" have been transferred to user "' . $targetUser->username . '"', 'move-content');
+        if ($errors) {
+            Yii::error('Errors while transferring content addons from user "' . $sourceUser->username . '" to user "' . $targetUser->username . '": ' . implode(' | ', $errors), 'move-content');
+        }
     }
 
     /**
@@ -219,14 +193,5 @@ class MoveUserContentJob extends ActiveJob implements ExclusiveJobInterface, Ret
         $errorMessage = $error ? $error->getMessage() : '';
         Yii::error('Error with user content moving job: ' . $errorMessage, 'move-content');
         return false;
-    }
-
-    /**
-     * @inerhitdoc
-     * Must not exceed to 50 chars
-     */
-    public function getExclusiveJobId()
-    {
-        return 'move-content.user.' . md5($this->sourceUserGuid);
     }
 }

@@ -15,12 +15,12 @@ use yii\base\Model;
 class MoveUserContentModel extends Model
 {
     /**
-     * @var string User guid
+     * @var string|array|null User guid
      */
     public $sourceUserGuid;
 
     /**
-     * @var string User guid
+     * @var string|array|null User guid
      */
     public $targetUserGuid;
 
@@ -37,7 +37,7 @@ class MoveUserContentModel extends Model
         return [
             'sourceUserGuid' => Yii::t('MoveContentModule.base', 'Source user'),
             'targetUserGuid' => Yii::t('MoveContentModule.base', 'Target user'),
-            'moveProfileContent' => Yii::t('MoveContentModule.base', 'Move the content of the user profile'),
+            'moveProfileContent' => Yii::t('MoveContentModule.base', 'Move user profile content'),
         ];
     }
 

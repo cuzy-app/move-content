@@ -8,6 +8,7 @@
 
 /** @noinspection MissedFieldInspection */
 
+use humhub\modules\admin\widgets\SpaceMenu;
 use humhub\modules\admin\widgets\UserMenu;
 use humhub\modules\moveContent\Events;
 
@@ -20,6 +21,11 @@ return [
             'class' => UserMenu::class,
             'event' => UserMenu::EVENT_INIT,
             'callback' => [Events::class, 'onAdminUserMenuInit']
+        ],
+        [
+            'class' => SpaceMenu::class,
+            'event' => SpaceMenu::EVENT_INIT,
+            'callback' => [Events::class, 'onAdminSpaceMenuInit']
         ],
     ],
 ];

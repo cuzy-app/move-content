@@ -1,4 +1,7 @@
-TODOS 
+TODOS
 =====
 
-Transfer the content from a space to another.
+Transfer:
+- user profile folders and files
+- event participation
+- tasks assignments

@@ -1,6 +1,11 @@
 Changelog
 =========
 
+2.0.0 (February 27, 2024)
+--------------------
+- Enh: Transfer content from a space to another
+- Enh: Add [Reactions](https://marketplace.humhub.com/module/reaction) to the list of content addons to move
+
 1.1.1 (November 22, 2023)
 --------------------
 - Fix #3: Crash when submitting the form allowing to select the users

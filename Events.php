@@ -38,4 +38,24 @@ class Events
             ]));
         }
     }
+
+    /**
+     * @param Event $event
+     * @throws InvalidConfigException|Throwable
+     */
+    public static function onAdminSpaceMenuInit($event)
+    {
+        /** @var UserMenu $menu */
+        $menu = $event->sender;
+
+        if (Yii::$app->user->can(ManageUsers::class)) {
+            $menu->addEntry(new MenuLink([
+                'label' => Yii::t('MoveContentModule.base', 'Move content'),
+                'url' => ['/move-content/space/index'],
+                'sortOrder' => 2000,
+                'isActive' => MenuLink::isActiveState('move-content', 'space'),
+                'isVisible' => true,
+            ]));
+        }
+    }
 }

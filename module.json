@@ -1,15 +1,17 @@
 {
   "id": "move-content",
   "name": "Move content",
-  "description": "Transfer the content from a user to another",
+  "description": "Transfer content, comments and likes from one user or space to another.",
   "keywords": [
     "move",
     "transfer",
-    "content"
+    "content",
+    "space",
+    "user"
   ],
-  "version": "1.1.1",
+  "version": "2.0.0",
   "humhub": {
-    "minVersion": "1.13"
+    "minVersion": "1.15"
   },
   "homepage": "https://github.com/cuzy-app/humhub-modules-move-content",
   "authors": [
@@ -20,6 +22,7 @@
     }
   ],
   "screenshots": [
-    "resources/screen_1.png"
+    "resources/screen_1.png",
+    "resources/screen_2.png"
   ]
 }
