@@ -3,7 +3,7 @@ Changelog
 
 2.0.0 (February 27, 2024)
 --------------------
-- Enh: Transfer content from a space to another
+- Enh: Transfer content from a space to another (thanks @JK742020 for financing the development)
 - Enh: Add [Reactions](https://marketplace.humhub.com/module/reaction) to the list of content addons to move
 
 1.1.1 (November 22, 2023)
