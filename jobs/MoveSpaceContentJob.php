@@ -10,10 +10,12 @@ namespace humhub\modules\moveContent\jobs;
 
 use humhub\modules\cfiles\models\Folder;
 use humhub\modules\content\models\Content;
+use humhub\modules\content\models\ContentTagRelation;
 use humhub\modules\queue\LongRunningActiveJob;
 use humhub\modules\search\libs\SearchHelper;
 use humhub\modules\space\models\Membership;
 use humhub\modules\space\models\Space;
+use humhub\modules\topic\models\Topic;
 use humhub\modules\wiki\models\WikiPage;
 use Yii;
 use yii\base\Exception;
@@ -133,6 +135,18 @@ class MoveSpaceContentJob extends LongRunningActiveJob
                 }
             }
 
+            // Rename Wiki pages having the same title as the one of the target space
+            if ($model instanceof WikiPage) {
+                $sameTitleExists = WikiPage::find()->contentContainer($targetSpace)->andWhere([WikiPage::tableName() . '.title' => $model->title])->exists();
+                if ($sameTitleExists) {
+                    // Don't replace updateAll with $model->save() because WikiPage::afterSave() crashes in command line because Yii::$app->user->getIdentity()
+                    WikiPage::updateAll(
+                        ['title' => StringHelper::truncate('Conflict with same page title: ' . $model->title, 250)],
+                        ['id' => $model->id]
+                    );
+                }
+            }
+
             $contentIdsToMove[] = $content->id;
         }
 
@@ -141,27 +155,49 @@ class MoveSpaceContentJob extends LongRunningActiveJob
             Content::updateAll(['contentcontainer_id' => $targetSpace->contentcontainer_id], ['in', 'id', $contentIdsToMoveChunk]);
         }
 
+        // Move topics
+        if ($contentIdsToMove) {
+            /** @var Topic $sourceTopic */
+            $sourceTopics = Topic::findByContainer($sourceSpace)->all();
+            /** @var Topic[] $targetTopics */
+            $targetTopics = Topic::findByContainer($targetSpace)->all();
+
+            // Search for duplicates
+            foreach ($sourceTopics as $sourceTopic) {
+                /** @var Topic $duplicatedTargetTopic */
+                $duplicatedTargetTopic = array_filter($targetTopics, static function ($targetTopic) use ($sourceTopic) {
+                    return
+                        $targetTopic->name === $sourceTopic->name
+                        && $targetTopic->module_id === $sourceTopic->module_id
+                        && $targetTopic->type === $sourceTopic->type ?
+                            $targetTopic :
+                            null;
+                });
+                if ($duplicatedTargetTopic) {
+                    // Attach the target space topic to the content
+                    ContentTagRelation::updateAll(['tag_id' => $duplicatedTargetTopic->id], ['tag_id' => $sourceTopic->id]);
+
+                    // Delete the duplicated source topic
+                    $sourceTopic->delete();
+                }
+            }
+
+            Topic::updateAll(['contentcontainer_id' => $targetSpace->contentcontainer_id], ['contentcontainer_id' => $sourceSpace->contentcontainer_id]);
+        }
+
         // Actions after moving
         foreach (array_chunk($contentIdsToMove, self::QUERY_IN_CLAUSE_LIMIT) as $contentIdsToMoveChunk) {
             foreach (Content::findAll(['id' => $contentIdsToMoveChunk]) as $content) {
                 $model = $content->getModel();
 
-                if ($model instanceof WikiPage) {
-                    $sameTitleExists = WikiPage::find()->contentContainer($targetSpace)->andWhere(['wiki_page.title' => $model->title])->exists();
-                    if ($sameTitleExists) {
-                        // Don't replace updateAll with $model->save() because WikiPage::afterSave() crashes in command line because Yii::$app->user->getIdentity()
-                        WikiPage::updateAll(
-                            ['title' => StringHelper::truncate('Conflict with same page title: ' . $model->title, 250)],
-                            ['id' => $model->id]
-                        );
-                    }
-                }
-
+                // Update search database
                 if ($content->getStateService()->isPublished()) {
                     SearchHelper::queueUpdate($model);
                 }
 
+                // Execute afterMove actions
                 $model->afterMove($targetSpace);
+
                 $this->_nbContentMoved++;
             }
         }

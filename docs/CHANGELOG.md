@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Unreleased
+--------------------
+- Enh: Move topics from the source to the target space and remove duplicates
+- Fix: Wiki pages are added "Conflict with same page title:" to the title even if no conflict
+
 2.0.0 (February 27, 2024)
 --------------------
 - Enh: Transfer content from a space to another (thanks [@JK742020](https://github.com/JK742020) for financing the development)
