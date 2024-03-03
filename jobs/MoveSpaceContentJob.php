@@ -156,34 +156,31 @@ class MoveSpaceContentJob extends LongRunningActiveJob
         }
 
         // Move topics
-        if ($contentIdsToMove) {
-            /** @var Topic $sourceTopic */
-            $sourceTopics = Topic::findByContainer($sourceSpace)->all();
-            /** @var Topic[] $targetTopics */
-            $targetTopics = Topic::findByContainer($targetSpace)->all();
+        /** @var Topic $sourceTopic */
+        $sourceTopics = Topic::findByContainer($sourceSpace)->all();
+        /** @var Topic[] $targetTopics */
+        $targetTopics = Topic::findByContainer($targetSpace)->all();
+        // Search for duplicates
+        foreach ($sourceTopics as $sourceTopic) {
+            /** @var Topic[] $duplicatedTargetTopic */
+            $duplicatedTargetTopics = array_filter($targetTopics, static function ($targetTopic) use ($sourceTopic) {
+                return
+                    $targetTopic->name === $sourceTopic->name
+                    && $targetTopic->module_id === $sourceTopic->module_id
+                    && $targetTopic->type === $sourceTopic->type ?
+                        $targetTopic :
+                        null;
+            });
+            if ($duplicatedTargetTopics) {
+                $duplicatedTargetTopic = reset($duplicatedTargetTopics);
+                // Attach the target space topic to the content
+                ContentTagRelation::updateAll(['tag_id' => $duplicatedTargetTopic->id], ['tag_id' => $sourceTopic->id]);
 
-            // Search for duplicates
-            foreach ($sourceTopics as $sourceTopic) {
-                /** @var Topic $duplicatedTargetTopic */
-                $duplicatedTargetTopic = array_filter($targetTopics, static function ($targetTopic) use ($sourceTopic) {
-                    return
-                        $targetTopic->name === $sourceTopic->name
-                        && $targetTopic->module_id === $sourceTopic->module_id
-                        && $targetTopic->type === $sourceTopic->type ?
-                            $targetTopic :
-                            null;
-                });
-                if ($duplicatedTargetTopic) {
-                    // Attach the target space topic to the content
-                    ContentTagRelation::updateAll(['tag_id' => $duplicatedTargetTopic->id], ['tag_id' => $sourceTopic->id]);
-
-                    // Delete the duplicated source topic
-                    $sourceTopic->delete();
-                }
+                // Delete the duplicated source topic
+                $sourceTopic->delete();
             }
-
-            Topic::updateAll(['contentcontainer_id' => $targetSpace->contentcontainer_id], ['contentcontainer_id' => $sourceSpace->contentcontainer_id]);
         }
+        Topic::updateAll(['contentcontainer_id' => $targetSpace->contentcontainer_id], ['contentcontainer_id' => $sourceSpace->contentcontainer_id]);
 
         // Actions after moving
         foreach (array_chunk($contentIdsToMove, self::QUERY_IN_CLAUSE_LIMIT) as $contentIdsToMoveChunk) {
