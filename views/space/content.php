@@ -7,9 +7,9 @@
  */
 
 use humhub\modules\moveContent\models\MoveUserContentModel;
+use humhub\modules\space\widgets\SpacePickerField;
 use humhub\modules\ui\form\widgets\ActiveForm;
 use humhub\modules\ui\view\components\View;
-use humhub\modules\user\widgets\UserPickerField;
 use humhub\widgets\Button;
 
 /**
@@ -21,21 +21,23 @@ use humhub\widgets\Button;
 
 <div class="panel-body">
     <h4><?= $title ?></h4>
-
+    <br>
+    
     <?php $form = ActiveForm::begin(); ?>
-    <?= UserPickerField::widget([
+    <?= SpacePickerField::widget([
         'model' => $model,
         'form' => $form,
-        'attribute' => 'sourceUserGuid',
+        'attribute' => 'sourceSpaceGuid',
         'maxSelection' => 1,
     ]) ?>
-    <?= UserPickerField::widget([
+    <?= SpacePickerField::widget([
         'model' => $model,
         'form' => $form,
-        'attribute' => 'targetUserGuid',
+        'attribute' => 'targetSpaceGuid',
         'maxSelection' => 1,
     ]) ?>
-    <?= $form->field($model, 'moveProfileContent')->checkbox() ?>
+    <?= $form->field($model, 'moveUsers')->checkbox() ?>
+
     <?= Button::save()->submit() ?>
     <?php ActiveForm::end(); ?>
 </div>

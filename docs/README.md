@@ -1,6 +1,8 @@
-# Move content
+# Move content and users
 
-**Transfer content, comments and likes from one user or space to another.**
+**Transfer Content, Comments and Likes from one User or Space to another.**
+
+**Transfer Users from one Group or Space to another.**
 
 ## Overview
 
@@ -9,6 +11,7 @@ Use cases:
 - A user closes their account but wants to transfer their content to another user first.
 - A user accidentally creates 2 accounts and wants to merge the content created in one account into the other.
 - Merging the content of a space into another
+- Transferring users from a Space or Group to another
 
 ## Administration
 

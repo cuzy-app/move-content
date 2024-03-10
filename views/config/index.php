@@ -10,6 +10,7 @@
 
 use humhub\modules\moveContent\Module;
 use humhub\modules\ui\view\components\View;
+use humhub\widgets\Button;
 
 /** @var Module $module */
 $module = Yii::$app->getModule('move-content');
@@ -40,7 +41,11 @@ $module = Yii::$app->getModule('move-content');
             </div>
 
             <div>
-                <?= \humhub\widgets\Button::primary('Start moving content!')->link(['/move-content/user/index']) ?>
+                <?= Button::primary('Move content from one user to another')->link(['/move-content/user/content']) ?>
+                <br><br>
+                <?= Button::primary('Move content and users from one space to another')->link(['/move-content/space/content']) ?>
+                <br><br>
+                <?= Button::primary('Move users from one group to another')->link(['/move-content/user/group']) ?>
             </div>
         </div>
     </div>

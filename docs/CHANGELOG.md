@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.1.0 (March 10, 2024)
+--------------------
+- Enh: Possibility to move Users from one Group to another
+
 2.0.1 (March 3, 2024)
 --------------------
 - Enh: Move topics from the source to the target space and remove duplicates

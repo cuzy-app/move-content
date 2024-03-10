@@ -6,10 +6,11 @@
  * @author [Marc FARRE](https://marc.fun)
  */
 
+use humhub\modules\admin\widgets\AdminMenu;
 use humhub\modules\moveContent\models\MoveUserContentModel;
-use humhub\modules\space\widgets\SpacePickerField;
 use humhub\modules\ui\form\widgets\ActiveForm;
 use humhub\modules\ui\view\components\View;
+use humhub\modules\user\widgets\UserPickerField;
 use humhub\widgets\Button;
 
 /**
@@ -17,26 +18,28 @@ use humhub\widgets\Button;
  * @var $model MoveUserContentModel
  * @var $title string
  */
+
+AdminMenu::markAsActive(['/admin/user']);
 ?>
 
 <div class="panel-body">
     <h4><?= $title ?></h4>
-
+    <br>
+    
     <?php $form = ActiveForm::begin(); ?>
-    <?= SpacePickerField::widget([
+    <?= UserPickerField::widget([
         'model' => $model,
         'form' => $form,
-        'attribute' => 'sourceSpaceGuid',
+        'attribute' => 'sourceUserGuid',
         'maxSelection' => 1,
     ]) ?>
-    <?= SpacePickerField::widget([
+    <?= UserPickerField::widget([
         'model' => $model,
         'form' => $form,
-        'attribute' => 'targetSpaceGuid',
+        'attribute' => 'targetUserGuid',
         'maxSelection' => 1,
     ]) ?>
-    <?= $form->field($model, 'moveUsers')->checkbox() ?>
-
+    <?= $form->field($model, 'moveProfileContent')->checkbox() ?>
     <?= Button::save()->submit() ?>
     <?php ActiveForm::end(); ?>
 </div>

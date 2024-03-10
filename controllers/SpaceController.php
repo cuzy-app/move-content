@@ -27,7 +27,7 @@ class SpaceController extends Controller
     }
 
 
-    public function actionIndex()
+    public function actionContent()
     {
         $model = new MoveSpaceContentModel();
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->save()) {
@@ -35,11 +35,11 @@ class SpaceController extends Controller
             $model = new MoveSpaceContentModel(); // Reset field values
         }
 
-        $title = Yii::t('MoveContentModule.base', 'Transfer the content from a space to another');
+        $title = Yii::t('MoveContentModule.base', 'Move content and users from one space to another');
         $this->subLayout = '@admin/views/layouts/space';
         $this->appendPageTitle($title);
 
-        return $this->render('index', [
+        return $this->render('content', [
             'title' => $title,
             'model' => $model,
         ]);

@@ -1,7 +1,7 @@
 {
   "id": "move-content",
-  "name": "Move content",
-  "description": "Transfer content, comments and likes from one user or space to another.",
+  "name": "Move content and users",
+  "description": "Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.",
   "keywords": [
     "move",
     "transfer",
@@ -9,7 +9,7 @@
     "space",
     "user"
   ],
-  "version": "2.0.1",
+  "version": "2.1.0",
   "humhub": {
     "minVersion": "1.15"
   },

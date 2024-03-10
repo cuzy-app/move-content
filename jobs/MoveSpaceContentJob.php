@@ -79,7 +79,7 @@ class MoveSpaceContentJob extends LongRunningActiveJob
             try {
                 $targetSpace->addMember($userId, 1, true, $membership->group_id);
             } catch (InvalidConfigException|\Throwable $e) {
-                $this->_errors[] = 'User ID ' . $userId . ' not added to the target space "' . $sourceSpace->displayName . '":' . $e->getMessage();
+                $this->_errors[] = 'User ID ' . $userId . ' not added to the target space "' . $targetSpace->displayName . '":' . $e->getMessage();
             }
         }
     }

@@ -30,7 +30,7 @@ class Module extends \humhub\components\Module
      */
     public function getName()
     {
-        return Yii::t('MoveContentModule.base', 'Move content');
+        return Yii::t('MoveContentModule.base', 'Move content and users');
     }
 
     /**
@@ -38,7 +38,7 @@ class Module extends \humhub\components\Module
      */
     public function getDescription()
     {
-        return Yii::t('MoveContentModule.base', 'Transfer content, comments and likes from one user or space to another.');
+        return Yii::t('MoveContentModule.base', 'Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.');
     }
 
     /**

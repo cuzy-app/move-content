@@ -31,9 +31,19 @@ class Events
         if (Yii::$app->user->can(ManageUsers::class)) {
             $menu->addEntry(new MenuLink([
                 'label' => Yii::t('MoveContentModule.base', 'Move content'),
-                'url' => ['/move-content/user/index'],
+                'url' => ['/move-content/user/content'],
                 'sortOrder' => 2000,
-                'isActive' => MenuLink::isActiveState('move-content', 'user'),
+                'isActive' => MenuLink::isActiveState('move-content', 'user', 'content'),
+                'isVisible' => true,
+            ]));
+        }
+
+        if (Yii::$app->user->can(ManageUsers::class)) {
+            $menu->addEntry(new MenuLink([
+                'label' => Yii::t('MoveContentModule.base', 'Move group users'),
+                'url' => ['/move-content/user/group'],
+                'sortOrder' => 2000,
+                'isActive' => MenuLink::isActiveState('move-content', 'user', 'group'),
                 'isVisible' => true,
             ]));
         }
@@ -51,9 +61,9 @@ class Events
         if (Yii::$app->user->can(ManageUsers::class)) {
             $menu->addEntry(new MenuLink([
                 'label' => Yii::t('MoveContentModule.base', 'Move content'),
-                'url' => ['/move-content/space/index'],
+                'url' => ['/move-content/space/content'],
                 'sortOrder' => 2000,
-                'isActive' => MenuLink::isActiveState('move-content', 'space'),
+                'isActive' => MenuLink::isActiveState('move-content', 'space', 'content'),
                 'isVisible' => true,
             ]));
         }
