@@ -21,11 +21,11 @@ Use cases:
 
 This module is free, but is the result of a lot of work for the design and maintenance over time.
 
-If it's useful to you, please consider [making a donation](https://www.cuzy.app/checkout/donate/) or [participating in the code](https://github.com/cuzy-app/humhub-modules-move-content). Thanks!
+If it's useful to you, please consider [making a donation](https://www.cuzy.app/checkout/donate/) or [participating in the code](https://github.com/cuzy-app/move-content). Thanks!
 
 ## Repository
 
-https://github.com/cuzy-app/humhub-modules-move-content
+https://github.com/cuzy-app/move-content
 
 ## Publisher
 
@@ -33,4 +33,4 @@ https://github.com/cuzy-app/humhub-modules-move-content
 
 ## Licence
 
-[GNU AGPL](https://github.com/cuzy-app/humhub-modules-move-content/blob/master/docs/LICENCE.md)
+[GNU AGPL](https://github.com/cuzy-app/move-content/blob/master/docs/LICENCE.md)

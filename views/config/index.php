@@ -35,7 +35,7 @@ $module = Yii::$app->getModule('move-content');
                 <a href="https://www.cuzy.app/checkout/donate/"
                    target="_blank">making a donation</a>
                 or
-                <a href="https://github.com/cuzy-app/humhub-modules-move-content"
+                <a href="https://github.com/cuzy-app/move-content"
                    target="_blank">participating in the code</a>.
                 Thanks!
             </div>

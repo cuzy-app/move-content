@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Unreleased (redo screenshots: new feature of 2.1.0 hasn't got a screenshot)
+--------------------
+- Chg: Repository URL from https://github.com/cuzy-app/humhub-modules-move-content
+  to https://github.com/cuzy-app/move-content
+
 2.1.0 (March 10, 2024)
 --------------------
 - Enh: Possibility to move Users from one Group to another

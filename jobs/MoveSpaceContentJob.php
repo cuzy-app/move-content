@@ -140,6 +140,7 @@ class MoveSpaceContentJob extends LongRunningActiveJob
                 $sameTitleExists = WikiPage::find()->contentContainer($targetSpace)->andWhere([WikiPage::tableName() . '.title' => $model->title])->exists();
                 if ($sameTitleExists) {
                     // Don't replace updateAll with $model->save() because WikiPage::afterSave() crashes in command line because Yii::$app->user->getIdentity()
+                    // Should be fixed in PR https://github.com/humhub/wiki/pull/321
                     WikiPage::updateAll(
                         ['title' => StringHelper::truncate('Conflict with same page title: ' . $model->title, 250)],
                         ['id' => $model->id]
