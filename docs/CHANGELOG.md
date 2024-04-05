@@ -3,8 +3,8 @@ Changelog
 
 Unreleased (redo screenshots: new feature of 2.1.0 hasn't got a screenshot)
 --------------------
-- Chg: Repository URL from https://github.com/cuzy-app/humhub-modules-move-content
-  to https://github.com/cuzy-app/move-content
+- Chg: Repository URL from https://github.com/cuzy-app/humhub-modules-move-content to https://github.com/cuzy-app/move-content
+- Fix: Compatibility with HumHub 1.16
 
 2.1.0 (March 10, 2024)
 --------------------

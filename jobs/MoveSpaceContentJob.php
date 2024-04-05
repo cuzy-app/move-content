@@ -11,6 +11,7 @@ namespace humhub\modules\moveContent\jobs;
 use humhub\modules\cfiles\models\Folder;
 use humhub\modules\content\models\Content;
 use humhub\modules\content\models\ContentTagRelation;
+use humhub\modules\content\services\ContentSearchService;
 use humhub\modules\queue\LongRunningActiveJob;
 use humhub\modules\search\libs\SearchHelper;
 use humhub\modules\space\models\Membership;
@@ -190,7 +191,12 @@ class MoveSpaceContentJob extends LongRunningActiveJob
 
                 // Update search database
                 if ($content->getStateService()->isPublished()) {
-                    SearchHelper::queueUpdate($model);
+                    // TODO: When Humhub minimal version for the module is 1.16, keep only `(new ContentSearchService($this))->update();`
+                    if (version_compare(Yii::$app->version, '1.16', '>=')) {
+                        (new ContentSearchService($this))->update();
+                    } else {
+                        SearchHelper::queueUpdate($model);
+                    }
                 }
 
                 // Execute afterMove actions
