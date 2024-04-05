@@ -193,7 +193,7 @@ class MoveSpaceContentJob extends LongRunningActiveJob
                 if ($content->getStateService()->isPublished()) {
                     // TODO: When Humhub minimal version for the module is 1.16, keep only `(new ContentSearchService($this))->update();`
                     if (version_compare(Yii::$app->version, '1.16', '>=')) {
-                        (new ContentSearchService($this))->update();
+                        (new ContentSearchService($model->content))->update();
                     } else {
                         SearchHelper::queueUpdate($model);
                     }
