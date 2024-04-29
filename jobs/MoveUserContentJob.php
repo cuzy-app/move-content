@@ -14,7 +14,6 @@ use humhub\modules\cfiles\models\Folder;
 use humhub\modules\comment\models\Comment;
 use humhub\modules\content\components\ContentActiveRecord;
 use humhub\modules\content\models\Content;
-use humhub\modules\content\models\ContentTag;
 use humhub\modules\eventsManager\models\EventSpeaker;
 use humhub\modules\like\models\Like;
 use humhub\modules\queue\LongRunningActiveJob;
@@ -22,7 +21,6 @@ use humhub\modules\reaction\models\Reaction;
 use humhub\modules\survey\models\Answer;
 use humhub\modules\user\models\User;
 use Yii;
-use yii\db\IntegrityException;
 
 
 class MoveUserContentJob extends LongRunningActiveJob
@@ -79,12 +77,7 @@ class MoveUserContentJob extends LongRunningActiveJob
 
             // Get and check Content and Model
             $this->_content = $content;
-            $this->_model = null;
-            try {
-                $this->_model = $this->_content->getModel();
-            } catch (IntegrityException $e) {
-                continue;
-            }
+            $this->_model = $this->_content->getModel();
             if (
                 !$this->_model
                 || $this->_model instanceof Activity
@@ -92,21 +85,35 @@ class MoveUserContentJob extends LongRunningActiveJob
                 continue;
             }
 
-            // The content is in the user profile
-            if ($this->_content->container instanceof User) {
-                if (
-                    $this->moveProfileContent
-                    && !$this->_model instanceof File
-                    && !$this->_model instanceof Folder
-                    && $this->_content->container->moduleManager->isEnabled($this->_model->getModuleId())
-                ) {
-                    $this->_content->contentcontainer_id = $targetUser->contentcontainer_id;
-                    $this->changeContentOwnerAndSave($targetUser);
-                    $this->_model->afterMove($targetUser);
+            // Change creator
+            $this->_content->created_by = $targetUser->id;
+            if ($this->_content->updateAttributes(['created_by'])) { // Don't replace with ->save() to avoid updated_at and stream_sort_date to be updated
+                $this->_nbContentMoved++;
+
+                if (property_exists($this->_model, 'created_by')) {
+                    $this->_model->created_by = $targetUser->id;
+                    $scenarios = $this->_model->scenarios();
+                    $scenario = $this->_model->getScenario();
+                    if (isset($scenarios[$scenario])) {
+                        $this->_model->save();
+                    }
                 }
-            } // The content is global or in a space
-            else {
-                $this->changeContentOwnerAndSave($targetUser);
+            }
+
+            // The content is in the user profile
+            if (
+                $this->_content->container instanceof User
+                && $this->moveProfileContent
+                && !$this->_model instanceof File
+                && !$this->_model instanceof Folder
+                && $this->_content->container->moduleManager->isEnabled($this->_model->getModuleId())
+            ) {
+                // Move to new user container
+                try {
+                    $this->_content->move($targetUser, true);
+                } catch (\Throwable $e) {
+                    $this->_errors[] = 'Error while moving content ID ' . $this->_content->id . ': ' . $e->getMessage();
+                }
             }
         }
 
@@ -114,31 +121,6 @@ class MoveUserContentJob extends LongRunningActiveJob
         Yii::warning($this->_nbContentMoved . ' contents of user "' . $sourceUser->username . '" have been transferred to user "' . $targetUser->username . '"', 'move-content');
         if ($this->_errors) {
             Yii::error('Errors while transferring content from user "' . $sourceUser->username . '" to user "' . $targetUser->username . '": ' . implode(' | ', $this->_errors), 'move-content');
-        }
-    }
-
-    /**
-     * @param User $targetUser
-     * @return void
-     */
-    protected function changeContentOwnerAndSave(User $targetUser)
-    {
-        $this->_content->created_by = $targetUser->id;
-
-        if ($this->_content->save()) {
-            ContentTag::deleteContentRelations($this->_content, false);
-            $this->_model->populateRelation('content', $this->_content);
-            if (isset($this->_model->created_by)) {
-                $this->_model->created_by = $targetUser->id;
-                $scenarios = $this->_model->scenarios();
-                $scenario = $this->_model->getScenario();
-                if (isset($scenarios[$scenario])) {
-                    $this->_model->save();
-                }
-            }
-            $this->_nbContentMoved++;
-        } else {
-            $this->_errors[] = 'Content ID ' . $this->_content->id . ': ' . implode(' ', $this->_content->getErrorSummary(true));
         }
     }
 

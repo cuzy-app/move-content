@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.1.2 (April 29, 2024)
+--------------------
+- Enh: When moving a content from a user to another, don't change the content update date (to keep the same stream order)
+
 2.1.1 (April 5, 2024)
 --------------------
 - Chg: Repository URL from https://github.com/cuzy-app/humhub-modules-move-content to https://github.com/cuzy-app/move-content
