@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.1.3 (Sept 21, 2024)
+--------------------
+- Enh: Updated translations
+
 2.1.2 (April 29, 2024)
 --------------------
 - Enh: When moving a content from a user to another, don't change the content update date (to keep the same stream order)
@@ -37,7 +41,7 @@ Changelog
 --------------------
 
 - Enh: Added likes to content addons movable
-- Chg: Minimal Humhub version is now 1.13
+- Chg: Minimal HumHub version is now 1.13
 
 1.0.1 (November 28, 2022)
 --------------------

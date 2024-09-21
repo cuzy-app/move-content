@@ -19,7 +19,7 @@ Use cases:
 
 ## Pricing
 
-This module is free, but is the result of a lot of work for the design and maintenance over time.
+This module is free, but the result of a lot of work for design and maintenance over time.
 
 If it's useful to you, please consider [making a donation](https://www.cuzy.app/checkout/donate/) or [participating in the code](https://github.com/cuzy-app/move-content). Thanks!
 

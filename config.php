@@ -6,8 +6,6 @@
  * @author [Marc FARRE](https://marc.fun)
  */
 
-/** @noinspection MissedFieldInspection */
-
 use humhub\modules\admin\widgets\SpaceMenu;
 use humhub\modules\admin\widgets\UserMenu;
 use humhub\modules\moveContent\Events;
