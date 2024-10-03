@@ -1,6 +1,10 @@
 Changelog
 =========
 
+Unreleased
+--------------------
+- Enh: Add GitHub HumHub PHP workflows (tests & CS fixer)
+
 2.1.3 (Sept 21, 2024)
 --------------------
 - Enh: Updated translations
