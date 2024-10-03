@@ -13,7 +13,6 @@ use yii\helpers\Url;
 
 class Module extends \humhub\components\Module
 {
-
     /**
      * @var string defines the icon
      */

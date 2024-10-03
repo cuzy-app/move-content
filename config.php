@@ -18,13 +18,12 @@ return [
         [
             'class' => UserMenu::class,
             'event' => UserMenu::EVENT_INIT,
-            'callback' => [Events::class, 'onAdminUserMenuInit']
+            'callback' => [Events::class, 'onAdminUserMenuInit'],
         ],
         [
             'class' => SpaceMenu::class,
             'event' => SpaceMenu::EVENT_INIT,
-            'callback' => [Events::class, 'onAdminSpaceMenuInit']
+            'callback' => [Events::class, 'onAdminSpaceMenuInit'],
         ],
     ],
 ];
-?>

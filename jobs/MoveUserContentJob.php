@@ -22,7 +22,6 @@ use humhub\modules\survey\models\Answer;
 use humhub\modules\user\models\User;
 use Yii;
 
-
 class MoveUserContentJob extends LongRunningActiveJob
 {
     /**

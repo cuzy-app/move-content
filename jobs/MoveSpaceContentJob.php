@@ -24,7 +24,6 @@ use yii\base\InvalidConfigException;
 use yii\db\IntegrityException;
 use yii\helpers\StringHelper;
 
-
 class MoveSpaceContentJob extends LongRunningActiveJob
 {
     protected const QUERY_IN_CLAUSE_LIMIT = 100;
@@ -144,7 +143,7 @@ class MoveSpaceContentJob extends LongRunningActiveJob
                     // Should be fixed in PR https://github.com/humhub/wiki/pull/321
                     WikiPage::updateAll(
                         ['title' => StringHelper::truncate('Conflict with same page title: ' . $model->title, 250)],
-                        ['id' => $model->id]
+                        ['id' => $model->id],
                     );
                 }
             }

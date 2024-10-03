@@ -14,7 +14,6 @@ use humhub\modules\moveContent\models\MoveUserContentModel;
 use humhub\modules\moveContent\models\MoveUsersModel;
 use Yii;
 
-
 class UserController extends Controller
 {
     /**
@@ -23,7 +22,7 @@ class UserController extends Controller
     public function getAccessRules()
     {
         return [
-            ['permission' => ManageUsers::class]
+            ['permission' => ManageUsers::class],
         ];
     }
 

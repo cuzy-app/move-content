@@ -13,7 +13,6 @@ use humhub\modules\admin\permissions\ManageSpaces;
 use humhub\modules\moveContent\models\MoveSpaceContentModel;
 use Yii;
 
-
 class SpaceController extends Controller
 {
     /**
@@ -22,7 +21,7 @@ class SpaceController extends Controller
     public function getAccessRules()
     {
         return [
-            ['permission' => ManageSpaces::class]
+            ['permission' => ManageSpaces::class],
         ];
     }
 

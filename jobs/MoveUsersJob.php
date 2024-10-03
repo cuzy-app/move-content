@@ -18,7 +18,6 @@ use yii\base\InvalidConfigException;
 use yii\db\IntegrityException;
 use yii\db\StaleObjectException;
 
-
 class MoveUsersJob extends LongRunningActiveJob
 {
     /**

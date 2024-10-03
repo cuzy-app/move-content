@@ -8,7 +8,6 @@
 
 namespace humhub\modules\moveContent;
 
-
 use humhub\modules\admin\permissions\ManageUsers;
 use humhub\modules\admin\widgets\UserMenu;
 use humhub\modules\ui\menu\MenuLink;
