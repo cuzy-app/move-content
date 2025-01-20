@@ -97,6 +97,11 @@ class MoveUserContentJob extends LongRunningActiveJob
                         $this->_model->save();
                     }
                 }
+
+                foreach ($this->_model->files as $file) {
+                    $file->created_by = $targetUser->id;
+                    $file->save();
+                }
             }
 
             // The content is in the user profile
