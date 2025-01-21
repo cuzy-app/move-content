@@ -41,7 +41,6 @@ use humhub\modules\reportcontent\models\ReportContent;
 use humhub\modules\show_content\models\ShowContent;
 use humhub\modules\survey\models\Field;
 use humhub\modules\user\models\Group;
-use humhub\modules\user\models\GroupAdmin;
 use humhub\modules\user\models\GroupUser;
 use humhub\modules\user\models\Invite;
 use humhub\modules\user\models\ProfileField;
@@ -78,7 +77,6 @@ class MoveUserContentJob extends LongRunningActiveJob
      */
     protected const NON_CONTENT_CLASSES = [
         Group::class,
-        GroupAdmin::class,
         GroupUser::class,
         Invite::class,
         ProfileField::class,
