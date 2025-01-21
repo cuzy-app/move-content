@@ -3,7 +3,8 @@ Changelog
 
 Unreleased
 --------------------
-- Fix: When moving content from a user to another, update the attached files ownership too 
+- Enh: When moving content from a user to another, update the attached files ownership too 
+- Enh: When moving content from a user to another, update other tables that are not content
 - Enh: Add GitHub HumHub PHP workflows (tests & CS fixer)
 
 2.1.3 (Sept 21, 2024)

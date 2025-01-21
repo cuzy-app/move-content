@@ -9,17 +9,46 @@
 namespace humhub\modules\moveContent\jobs;
 
 use humhub\modules\activity\models\Activity;
+use humhub\modules\analytics\models\AnalyticsReportedContent;
+use humhub\modules\categoryGroup\models\CategoryGroup;
 use humhub\modules\cfiles\models\File;
 use humhub\modules\cfiles\models\Folder;
+use humhub\modules\classifiedSpace\models\ClassifiedSpaceCategory;
 use humhub\modules\comment\models\Comment;
 use humhub\modules\content\components\ContentActiveRecord;
 use humhub\modules\content\models\Content;
+use humhub\modules\ecommerce\models\Discount;
+use humhub\modules\ecommerce\models\Guest;
+use humhub\modules\ecommerce\models\Invoice;
+use humhub\modules\ecommerce\models\Item;
+use humhub\modules\ecommerce\models\PrivateContent;
+use humhub\modules\ecommerce\models\Stripe;
+use humhub\modules\ecommerce\models\Subscription;
+use humhub\modules\ecommerce\models\Transaction;
+use humhub\modules\ecommerce\models\Vendor;
 use humhub\modules\eventsManager\models\EventSpeaker;
+use humhub\modules\helloasso\models\HelloassoForm;
+use humhub\modules\helloasso\models\HelloassoItem;
+use humhub\modules\helloasso\models\HelloassoPayer;
 use humhub\modules\like\models\Like;
+use humhub\modules\mass_notification\models\MassNotification;
+use humhub\modules\polls\models\PollAnswer;
+use humhub\modules\polls\models\PollAnswerUser;
+use humhub\modules\questions\models\QuestionAnswer;
 use humhub\modules\queue\LongRunningActiveJob;
 use humhub\modules\reaction\models\Reaction;
-use humhub\modules\survey\models\Answer;
+use humhub\modules\reportcontent\models\ReportContent;
+use humhub\modules\show_content\models\ShowContent;
+use humhub\modules\survey\models\Field;
+use humhub\modules\user\models\Group;
+use humhub\modules\user\models\GroupAdmin;
+use humhub\modules\user\models\GroupUser;
+use humhub\modules\user\models\Invite;
+use humhub\modules\user\models\ProfileField;
+use humhub\modules\user\models\ProfileFieldCategory;
 use humhub\modules\user\models\User;
+use humhub\modules\userCleanup\models\UserCleanup;
+use humhub\modules\virusScanner\models\VirusFile;
 use Yii;
 
 class MoveUserContentJob extends LongRunningActiveJob
@@ -45,6 +74,49 @@ class MoveUserContentJob extends LongRunningActiveJob
     protected array $_errors = [];
 
     /**
+     * Tables where created_by must be updated
+     */
+    protected const NON_CONTENT_CLASSES = [
+        Group::class,
+        GroupAdmin::class,
+        GroupUser::class,
+        Invite::class,
+        ProfileField::class,
+        ProfileFieldCategory::class,
+        PollAnswer::class,
+        PollAnswerUser::class,
+        QuestionAnswer::class,
+        ReportContent::class,
+        VirusFile::class,
+        AnalyticsReportedContent::class,
+        CategoryGroup::class,
+        ClassifiedSpaceCategory::class,
+        Discount::class,
+        Guest::class,
+        Invoice::class,
+        Item::class,
+        PrivateContent::class,
+        Stripe::class,
+        Subscription::class,
+        Transaction::class,
+        Vendor::class,
+        HelloassoForm::class,
+        HelloassoItem::class,
+        HelloassoPayer::class,
+        MassNotification::class,
+        ShowContent::class,
+        Field::class,
+        UserCleanup::class,
+
+        // Content Active Records
+        Like::class,
+        Comment::class,
+        Answer::class,
+        Reaction::class,
+        EventSpeaker::class,
+    ];
+
+    /**
      * @inheritdoc
      */
     public function run()
@@ -57,7 +129,8 @@ class MoveUserContentJob extends LongRunningActiveJob
         }
 
         $this->moveContent($sourceUser, $targetUser);
-        $this->moveContentAddons($sourceUser, $targetUser);
+        $this->moveNonContentActiveRecords($sourceUser, $targetUser);
+        $this->moveFiles($sourceUser, $targetUser);
     }
 
     /**
@@ -97,11 +170,6 @@ class MoveUserContentJob extends LongRunningActiveJob
                         $this->_model->save();
                     }
                 }
-
-                foreach ($this->_model->files as $file) {
-                    $file->created_by = $targetUser->id;
-                    $file->save();
-                }
             }
 
             // The content is in the user profile
@@ -133,41 +201,53 @@ class MoveUserContentJob extends LongRunningActiveJob
      * @param User $targetUser
      * @return void
      */
-    protected function moveContentAddons(User $sourceUser, User $targetUser)
+    protected function moveNonContentActiveRecords(User $sourceUser, User $targetUser)
     {
-        $nbContentAddonsMoved = 0;
+        $nbRecordsMoved = 0;
         $errors = [];
 
-        $condition = ['created_by' => $sourceUser->id];
-        $contentAddonQueries = [
-            Comment::find()->where($condition),
-            Like::find()->where($condition),
-        ];
-        if (class_exists(Answer::class)) {
-            $contentAddonQueries[] = Answer::find()->where($condition);
-        }
-        if (class_exists(Reaction::class)) {
-            $contentAddonQueries[] = Reaction::find()->where($condition);
-        }
-        if (class_exists(EventSpeaker::class)) {
-            $contentAddonQueries[] = EventSpeaker::find()->where($condition);
-        }
-
-        foreach ($contentAddonQueries as $contentAddonQuery) {
-            foreach ($contentAddonQuery->each(1000) as $contentAddon) {
-                $contentAddon->created_by = $targetUser->id;
-                if ($contentAddon->save()) {
-                    $nbContentAddonsMoved++;
+        foreach (self::NON_CONTENT_CLASSES as $class) {
+            if (!class_exists($class)) {
+                continue;
+            }
+            $query = $class::find()->where(['created_by' => $sourceUser->id]);
+            foreach ($query->each(1000) as $record) {
+                $record->created_by = $targetUser->id;
+                if ($record->save()) {
+                    $nbRecordsMoved++;
                 } else {
-                    $this->_errors[] = 'Content addon ID ' . $contentAddon->id . ': ' . implode(' ', $contentAddon->getErrorSummary(true));
+                    $this->_errors[] = $class . ' record ID ' . $record->id . ': ' . implode(' ', $record->getErrorSummary(true));
                 }
             }
         }
 
         // Log result
-        Yii::warning($nbContentAddonsMoved . ' content addons of user "' . $sourceUser->username . '" have been transferred to user "' . $targetUser->username . '"', 'move-content');
+        Yii::warning($nbRecordsMoved . ' records of user "' . $sourceUser->username . '" have been transferred to user "' . $targetUser->username . '"', 'move-content');
         if ($errors) {
-            Yii::error('Errors while transferring content addons from user "' . $sourceUser->username . '" to user "' . $targetUser->username . '": ' . implode(' | ', $errors), 'move-content');
+            Yii::error('Errors while transferring records from user "' . $sourceUser->username . '" to user "' . $targetUser->username . '": ' . implode(' | ', $errors), 'move-content');
+        }
+    }
+
+    private function moveFiles(User $sourceUser, User $targetUser)
+    {
+        $nbFilesMoved = 0;
+        $errors = [];
+
+        foreach (\humhub\modules\file\models\File::find()->each(1000) as $file) {
+            if ($file->created_by === $sourceUser->id) {
+                $file->created_by = $targetUser->id;
+                if ($file->save()) {
+                    $nbFilesMoved++;
+                } else {
+                    $this->_errors[] = 'File ID ' . $file->id . ': ' . implode(' ', $file->getErrorSummary(true));
+                }
+            }
+        }
+
+        // Log result
+        Yii::warning($nbFilesMoved . ' files have been transferred to user "' . $targetUser->username . '"', 'move-content');
+        if ($errors) {
+            Yii::error('Errors while transferring files to user "' . $targetUser->username . '": ' . implode(' | ', $errors), 'move-content');
         }
     }
 
