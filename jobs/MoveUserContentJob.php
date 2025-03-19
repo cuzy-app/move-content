@@ -205,7 +205,11 @@ class MoveUserContentJob extends LongRunningActiveJob
         $errors = [];
 
         foreach (self::NON_CONTENT_CLASSES as $class) {
-            if (!class_exists($class)) {
+            if (
+                !class_exists($class)
+                || !method_exists($class, 'tableName')
+                || !Yii::$app->db->getTableSchema($class::tableName()) // In case the module is installed, but disabled
+            ) {
                 continue;
             }
             $query = $class::find()->where(['created_by' => $sourceUser->id]);

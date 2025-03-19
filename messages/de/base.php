@@ -4,7 +4,7 @@ return array (
   'If unchecked, data such as calendar event participations or task assignments may be deleted.' => 'Wenn diese Option deaktiviert ist, werden möglicherweise Daten wie Teilnahmen an Kalenderereignissen oder Aufgabenzuweisungen gelöscht.',
   'Move content' => 'Inhalte verschieben',
   'Move content and users' => 'Inhalte und Benutzer verschieben',
-  'Move content and users from one space to another' => 'Verschieben Sie Inhalte und Benutzer von einem Bereich in einen anderen',
+  'Move content and users from one space to another' => 'Verschieben Sie Inhalte und Benutzer von einem Space in einen anderen',
   'Move content from one user to another' => 'Verschieben von Inhalten von einem Benutzer zum anderen',
   'Move group users' => 'Gruppenbenutzer verschieben',
   'Move user profile content' => 'Verschieben Sie den Inhalt des Benutzerprofils',
