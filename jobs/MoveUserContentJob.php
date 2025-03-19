@@ -19,7 +19,6 @@ use humhub\modules\content\components\ContentActiveRecord;
 use humhub\modules\content\models\Content;
 use humhub\modules\ecommerce\models\Discount;
 use humhub\modules\ecommerce\models\Guest;
-use humhub\modules\ecommerce\models\Invoice;
 use humhub\modules\ecommerce\models\Item;
 use humhub\modules\ecommerce\models\PrivateContent;
 use humhub\modules\ecommerce\models\Stripe;
@@ -91,7 +90,6 @@ class MoveUserContentJob extends LongRunningActiveJob
         ClassifiedSpaceCategory::class,
         Discount::class,
         Guest::class,
-        Invoice::class,
         Item::class,
         PrivateContent::class,
         Stripe::class,
