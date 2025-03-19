@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Unreleased
+2.1.4 (March 19, 2025)
 --------------------
 - Enh: When moving content from a user to another, update the attached files ownership too 
 - Enh: When moving content from a user to another, update other tables that are not content
