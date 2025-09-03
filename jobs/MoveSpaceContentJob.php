@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Move content
  * @link https://www.cuzy.app
@@ -168,9 +169,9 @@ class MoveSpaceContentJob extends LongRunningActiveJob
                 return
                     $targetTopic->name === $sourceTopic->name
                     && $targetTopic->module_id === $sourceTopic->module_id
-                    && $targetTopic->type === $sourceTopic->type ?
-                        $targetTopic :
-                        null;
+                    && $targetTopic->type === $sourceTopic->type
+                        ? $targetTopic
+                        : null;
             });
             if ($duplicatedTargetTopics) {
                 $duplicatedTargetTopic = reset($duplicatedTargetTopics);
