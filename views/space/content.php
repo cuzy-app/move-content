@@ -8,9 +8,9 @@
 
 use humhub\modules\moveContent\models\MoveUserContentModel;
 use humhub\modules\space\widgets\SpacePickerField;
-use humhub\modules\ui\form\widgets\ActiveForm;
-use humhub\modules\ui\view\components\View;
-use humhub\widgets\Button;
+use humhub\widgets\form\ActiveForm;
+use humhub\components\View;
+use humhub\widgets\bootstrap\Button;
 
 /**
  * @var $this View
@@ -22,7 +22,7 @@ use humhub\widgets\Button;
 <div class="panel-body">
     <h4><?= $title ?></h4>
     <br>
-    
+
     <?php $form = ActiveForm::begin(); ?>
     <?= SpacePickerField::widget([
         'model' => $model,

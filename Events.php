@@ -8,6 +8,7 @@
 
 namespace humhub\modules\moveContent;
 
+use humhub\helpers\ControllerHelper;
 use humhub\modules\admin\permissions\ManageUsers;
 use humhub\modules\admin\widgets\UserMenu;
 use humhub\modules\ui\menu\MenuLink;
@@ -32,7 +33,7 @@ class Events
                 'label' => Yii::t('MoveContentModule.base', 'Move content'),
                 'url' => ['/move-content/user/content'],
                 'sortOrder' => 2000,
-                'isActive' => MenuLink::isActiveState('move-content', 'user', 'content'),
+                'isActive' => ControllerHelper::isActivePath('move-content', 'user', 'content'),
                 'isVisible' => true,
             ]));
         }
@@ -42,7 +43,7 @@ class Events
                 'label' => Yii::t('MoveContentModule.base', 'Move group users'),
                 'url' => ['/move-content/user/group'],
                 'sortOrder' => 2000,
-                'isActive' => MenuLink::isActiveState('move-content', 'user', 'group'),
+                'isActive' => ControllerHelper::isActivePath('move-content', 'user', 'group'),
                 'isVisible' => true,
             ]));
         }
@@ -62,7 +63,7 @@ class Events
                 'label' => Yii::t('MoveContentModule.base', 'Move content'),
                 'url' => ['/move-content/space/content'],
                 'sortOrder' => 2000,
-                'isActive' => MenuLink::isActiveState('move-content', 'space', 'content'),
+                'isActive' => ControllerHelper::isActivePath('move-content', 'space', 'content'),
                 'isVisible' => true,
             ]));
         }

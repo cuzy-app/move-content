@@ -38,6 +38,7 @@ use humhub\modules\queue\LongRunningActiveJob;
 use humhub\modules\reaction\models\Reaction;
 use humhub\modules\reportcontent\models\ReportContent;
 use humhub\modules\show_content\models\ShowContent;
+use humhub\modules\spacesMap\models\SpacesMap;
 use humhub\modules\survey\models\Field;
 use humhub\modules\user\models\Group;
 use humhub\modules\user\models\GroupUser;
@@ -103,6 +104,7 @@ class MoveUserContentJob extends LongRunningActiveJob
         ShowContent::class,
         Field::class,
         UserCleanup::class,
+        SpacesMap::class,
 
         // Content Active Records
         Like::class,

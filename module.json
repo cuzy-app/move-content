@@ -9,9 +9,9 @@
     "space",
     "user"
   ],
-  "version": "2.1.4",
+  "version": "2.2.0",
   "humhub": {
-    "minVersion": "1.15"
+    "minVersion": "1.18"
   },
   "homepage": "https://github.com/cuzy-app/move-content",
   "authors": [

@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.2.0 (September 2, 2025)
+--------------------
+- Enh: Migration to Bootstrap 5 for HumHub 1.18
+
 2.1.4 (March 19, 2025)
 --------------------
 - Enh: When moving content from a user to another, update the attached files ownership too 

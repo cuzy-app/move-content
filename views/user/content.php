@@ -8,10 +8,10 @@
 
 use humhub\modules\admin\widgets\AdminMenu;
 use humhub\modules\moveContent\models\MoveUserContentModel;
-use humhub\modules\ui\form\widgets\ActiveForm;
-use humhub\modules\ui\view\components\View;
+use humhub\widgets\form\ActiveForm;
+use humhub\components\View;
 use humhub\modules\user\widgets\UserPickerField;
-use humhub\widgets\Button;
+use humhub\widgets\bootstrap\Button;
 
 /**
  * @var $this View
@@ -25,7 +25,7 @@ AdminMenu::markAsActive(['/admin/user']);
 <div class="panel-body">
     <h4><?= $title ?></h4>
     <br>
-    
+
     <?php $form = ActiveForm::begin(); ?>
     <?= UserPickerField::widget([
         'model' => $model,

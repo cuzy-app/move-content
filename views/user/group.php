@@ -8,10 +8,10 @@
 
 use humhub\modules\admin\widgets\AdminMenu;
 use humhub\modules\moveContent\models\MoveUsersModel;
-use humhub\modules\ui\form\widgets\ActiveForm;
-use humhub\modules\ui\view\components\View;
+use humhub\widgets\form\ActiveForm;
+use humhub\components\View;
 use humhub\modules\user\models\Group;
-use humhub\widgets\Button;
+use humhub\widgets\bootstrap\Button;
 use yii\helpers\ArrayHelper;
 
 /**
