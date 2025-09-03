@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Move content
  * @link https://www.cuzy.app
@@ -44,10 +45,10 @@ class MoveSpaceContentModel extends Model
     public function attributeHints()
     {
         return [
-            'moveUsers' =>
-                Yii::t('MoveContentModule.base', 'All users except the owner will be removed from the source space.') . '<br>' .
-                Yii::t('MoveContentModule.base', 'Users missing from the target space will be added with the same role.') . '<br>' .
-                Yii::t('MoveContentModule.base', 'If unchecked, data such as calendar event participations or task assignments may be deleted.'),
+            'moveUsers'
+                => Yii::t('MoveContentModule.base', 'All users except the owner will be removed from the source space.') . '<br>'
+                . Yii::t('MoveContentModule.base', 'Users missing from the target space will be added with the same role.') . '<br>'
+                . Yii::t('MoveContentModule.base', 'If unchecked, data such as calendar event participations or task assignments may be deleted.'),
         ];
     }
 
