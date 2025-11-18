@@ -19,11 +19,6 @@ class Module extends \humhub\components\Module
      */
     public $icon = 'arrows-h';
 
-    /**
-     * @var string defines path for resources, including the screenshots path for the marketplace
-     */
-    public $resourcesPath = 'resources';
-
 
     /**
      * @inerhitdoc
