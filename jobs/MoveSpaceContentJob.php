@@ -165,14 +165,11 @@ class MoveSpaceContentJob extends LongRunningActiveJob
         // Search for duplicates
         foreach ($sourceTopics as $sourceTopic) {
             /** @var Topic[] $duplicatedTargetTopic */
-            $duplicatedTargetTopics = array_filter($targetTopics, static function ($targetTopic) use ($sourceTopic) {
-                return
-                    $targetTopic->name === $sourceTopic->name
-                    && $targetTopic->module_id === $sourceTopic->module_id
-                    && $targetTopic->type === $sourceTopic->type
-                        ? $targetTopic
-                        : null;
-            });
+            $duplicatedTargetTopics = array_filter($targetTopics, static fn($targetTopic) => $targetTopic->name === $sourceTopic->name
+            && $targetTopic->module_id === $sourceTopic->module_id
+            && $targetTopic->type === $sourceTopic->type
+                ? $targetTopic
+                : null);
             if ($duplicatedTargetTopics) {
                 $duplicatedTargetTopic = reset($duplicatedTargetTopics);
                 // Attach the target space topic to the content
@@ -208,7 +205,7 @@ class MoveSpaceContentJob extends LongRunningActiveJob
         foreach ($sourceSpace->getMemberships()->each() as $membership) {
             try {
                 $sourceSpace->removeMember($membership->user_id);
-            } catch (InvalidConfigException|\Throwable $e) {
+            } catch (InvalidConfigException|\Throwable) {
             }
         }
     }
