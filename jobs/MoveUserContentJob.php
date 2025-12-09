@@ -32,6 +32,8 @@ use humhub\modules\helloasso\models\HelloassoItem;
 use humhub\modules\helloasso\models\HelloassoPayer;
 use humhub\modules\like\models\Like;
 use humhub\modules\mass_notification\models\MassNotification;
+use humhub\modules\nextcloud\models\NextcloudActivity;
+use humhub\modules\nextcloud\models\NextcloudShareApiLog;
 use humhub\modules\polls\models\PollAnswer;
 use humhub\modules\polls\models\PollAnswerUser;
 use humhub\modules\questions\models\QuestionAnswer;
@@ -40,6 +42,7 @@ use humhub\modules\reaction\models\Reaction;
 use humhub\modules\reportcontent\models\ReportContent;
 use humhub\modules\show_content\models\ShowContent;
 use humhub\modules\spacesMap\models\SpacesMap;
+use humhub\modules\survey\models\Answer;
 use humhub\modules\survey\models\Field;
 use humhub\modules\user\models\Group;
 use humhub\modules\user\models\GroupUser;
@@ -106,6 +109,8 @@ class MoveUserContentJob extends LongRunningActiveJob
         Field::class,
         UserCleanup::class,
         SpacesMap::class,
+        NextcloudShareApiLog::class,
+        NextcloudActivity::class,
 
         // Content Active Records
         Like::class,
