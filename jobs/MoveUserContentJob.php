@@ -68,13 +68,13 @@ class MoveUserContentJob extends LongRunningActiveJob
     /**
      * @var Content
      */
-    protected $_content;
+    protected $content;
     /**
      * @var ContentActiveRecord
      */
-    protected $_model;
-    protected int $_nbContentMoved = 0;
-    protected array $_errors = [];
+    protected $model;
+    protected int $nbContentMoved = 0;
+    protected array $errors = [];
 
     /**
      * Tables where created_by must be updated
@@ -152,51 +152,51 @@ class MoveUserContentJob extends LongRunningActiveJob
         foreach ($contentQuery->each(500) as $content) {
 
             // Get and check Content and Model
-            $this->_content = $content;
-            $this->_model = $this->_content->getModel();
+            $this->content = $content;
+            $this->model = $this->content->getModel();
             if (
-                !$this->_model
-                || $this->_model instanceof Activity
+                !$this->model
+                || $this->model instanceof Activity
             ) {
                 continue;
             }
 
             // Change creator
-            $this->_content->created_by = $targetUser->id;
-            if ($this->_content->updateAttributes(['created_by'])) { // Don't replace with ->save() to avoid updated_at and stream_sort_date to be updated
-                $this->_nbContentMoved++;
+            $this->content->created_by = $targetUser->id;
+            if ($this->content->updateAttributes(['created_by'])) { // Don't replace with ->save() to avoid updated_at and stream_sort_date to be updated
+                $this->nbContentMoved++;
 
-                if (property_exists($this->_model, 'created_by')) {
-                    $this->_model->created_by = $targetUser->id;
-                    $scenarios = $this->_model->scenarios();
-                    $scenario = $this->_model->getScenario();
+                if (property_exists($this->model, 'created_by')) {
+                    $this->model->created_by = $targetUser->id;
+                    $scenarios = $this->model->scenarios();
+                    $scenario = $this->model->getScenario();
                     if (isset($scenarios[$scenario])) {
-                        $this->_model->save();
+                        $this->model->save();
                     }
                 }
             }
 
             // The content is in the user profile
             if (
-                $this->_content->container instanceof User
+                $this->content->container instanceof User
                 && $this->moveProfileContent
-                && !$this->_model instanceof File
-                && !$this->_model instanceof Folder
-                && $this->_content->container->moduleManager->isEnabled($this->_model->getModuleId())
+                && !$this->model instanceof File
+                && !$this->model instanceof Folder
+                && $this->content->container->moduleManager->isEnabled($this->model->getModuleId())
             ) {
                 // Move to new user container
                 try {
-                    $this->_content->move($targetUser, true);
+                    $this->content->move($targetUser, true);
                 } catch (\Throwable $e) {
-                    $this->_errors[] = 'Error while moving content ID ' . $this->_content->id . ': ' . $e->getMessage();
+                    $this->errors[] = 'Error while moving content ID ' . $this->content->id . ': ' . $e->getMessage();
                 }
             }
         }
 
         // Log result
-        Yii::warning($this->_nbContentMoved . ' contents of user "' . $sourceUser->username . '" have been transferred to user "' . $targetUser->username . '"', 'move-content');
-        if ($this->_errors) {
-            Yii::error('Errors while transferring content from user "' . $sourceUser->username . '" to user "' . $targetUser->username . '": ' . implode(' | ', $this->_errors), 'move-content');
+        Yii::warning($this->nbContentMoved . ' contents of user "' . $sourceUser->username . '" have been transferred to user "' . $targetUser->username . '"', 'move-content');
+        if ($this->errors) {
+            Yii::error('Errors while transferring content from user "' . $sourceUser->username . '" to user "' . $targetUser->username . '": ' . implode(' | ', $this->errors), 'move-content');
         }
     }
 
@@ -224,7 +224,7 @@ class MoveUserContentJob extends LongRunningActiveJob
                 if ($record->save()) {
                     $nbRecordsMoved++;
                 } else {
-                    $this->_errors[] = $class . ' record ID ' . $record->id . ': ' . implode(' ', $record->getErrorSummary(true));
+                    $this->errors[] = $class . ' record ID ' . $record->id . ': ' . implode(' ', $record->getErrorSummary(true));
                 }
             }
         }
@@ -247,7 +247,7 @@ class MoveUserContentJob extends LongRunningActiveJob
                 if ($file->save()) {
                     $nbFilesMoved++;
                 } else {
-                    $this->_errors[] = 'File ID ' . $file->id . ': ' . implode(' ', $file->getErrorSummary(true));
+                    $this->errors[] = 'File ID ' . $file->id . ': ' . implode(' ', $file->getErrorSummary(true));
                 }
             }
         }

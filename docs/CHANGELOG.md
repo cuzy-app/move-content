@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Unreleased
+--------------------
+- Fix: ShowContent model namespace
+- Fix: protected attributes naming in Jobs
+
 2.2.0 (September 3, 2025)
 --------------------
 - Enh: Migration to Bootstrap 5 for HumHub 1.18

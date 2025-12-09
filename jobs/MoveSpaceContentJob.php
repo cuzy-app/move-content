@@ -14,7 +14,6 @@ use humhub\modules\content\models\Content;
 use humhub\modules\content\models\ContentTagRelation;
 use humhub\modules\content\services\ContentSearchService;
 use humhub\modules\queue\LongRunningActiveJob;
-use humhub\modules\search\libs\SearchHelper;
 use humhub\modules\space\models\Membership;
 use humhub\modules\space\models\Space;
 use humhub\modules\topic\models\Topic;
@@ -38,8 +37,8 @@ class MoveSpaceContentJob extends LongRunningActiveJob
      */
     public $targetSpaceGuid;
     public bool $moveUsers = false;
-    protected int $_nbContentMoved = 0;
-    protected array $_errors = [];
+    protected int $nbContentMoved = 0;
+    protected array $errors = [];
 
     /**
      * @inheritdoc
@@ -63,9 +62,9 @@ class MoveSpaceContentJob extends LongRunningActiveJob
         }
 
         // Log result
-        Yii::warning($this->_nbContentMoved . ' contents of space "' . $sourceSpace->displayName . '" have been transferred to space "' . $targetSpace->displayName . '"', 'move-content');
-        if ($this->_errors) {
-            Yii::error('Errors while transferring content from space "' . $sourceSpace->displayName . '" to space "' . $targetSpace->displayName . '": ' . PHP_EOL . implode(PHP_EOL, $this->_errors), 'move-content');
+        Yii::warning($this->nbContentMoved . ' contents of space "' . $sourceSpace->displayName . '" have been transferred to space "' . $targetSpace->displayName . '"', 'move-content');
+        if ($this->errors) {
+            Yii::error('Errors while transferring content from space "' . $sourceSpace->displayName . '" to space "' . $targetSpace->displayName . '": ' . PHP_EOL . implode(PHP_EOL, $this->errors), 'move-content');
         }
     }
 
@@ -80,7 +79,7 @@ class MoveSpaceContentJob extends LongRunningActiveJob
             try {
                 $targetSpace->addMember($userId, 1, true, $membership->group_id);
             } catch (InvalidConfigException|\Throwable $e) {
-                $this->_errors[] = 'User ID ' . $userId . ' not added to the target space "' . $targetSpace->displayName . '":' . $e->getMessage();
+                $this->errors[] = 'User ID ' . $userId . ' not added to the target space "' . $targetSpace->displayName . '":' . $e->getMessage();
             }
         }
     }
@@ -128,11 +127,11 @@ class MoveSpaceContentJob extends LongRunningActiveJob
                         !$targetSpace->moduleManager->isEnabled($moduleId)
                         && !$targetSpace->moduleManager->enable($moduleId)
                     ) {
-                        $this->_errors[] = $errorMsg;
+                        $this->errors[] = $errorMsg;
                         continue;
                     }
                 } catch (Exception $e) {
-                    $this->_errors[] = $errorMsg . ': ' . $e->getMessage();
+                    $this->errors[] = $errorMsg . ': ' . $e->getMessage();
                 }
             }
 
@@ -194,7 +193,7 @@ class MoveSpaceContentJob extends LongRunningActiveJob
                 // Execute afterMove actions
                 $model->afterMove($targetSpace);
 
-                $this->_nbContentMoved++;
+                $this->nbContentMoved++;
             }
         }
     }
@@ -205,7 +204,8 @@ class MoveSpaceContentJob extends LongRunningActiveJob
         foreach ($sourceSpace->getMemberships()->each() as $membership) {
             try {
                 $sourceSpace->removeMember($membership->user_id);
-            } catch (InvalidConfigException|\Throwable) {
+            } catch (InvalidConfigException|\Throwable $exception) {
+                Yii::warning('Error while removing User ID ' . $membership->user_id . ': ' . $exception->getMessage(), 'move-content');
             }
         }
     }
