@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Unreleased
+2.2.1 (January 26, 2026)
 --------------------
 - Fix: ShowContent model namespace
 - Fix: protected attributes naming in Jobs

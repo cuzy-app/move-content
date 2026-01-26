@@ -21,7 +21,7 @@ use humhub\modules\content\models\Content;
 use humhub\modules\ecommerce\models\Discount;
 use humhub\modules\ecommerce\models\Guest;
 use humhub\modules\ecommerce\models\Item;
-use humhub\modules\ecommerce\models\PrivateContent;
+use humhub\modules\ecommerce\models\purchasables\PrivateContent;
 use humhub\modules\ecommerce\models\Stripe;
 use humhub\modules\ecommerce\models\Subscription;
 use humhub\modules\ecommerce\models\Transaction;
