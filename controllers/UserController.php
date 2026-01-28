@@ -20,7 +20,7 @@ class UserController extends Controller
     /**
      * @inheritdoc
      */
-    public function getAccessRules()
+    protected function getAccessRules()
     {
         return [
             ['permission' => ManageUsers::class],

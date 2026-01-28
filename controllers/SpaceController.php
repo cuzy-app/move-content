@@ -19,7 +19,7 @@ class SpaceController extends Controller
     /**
      * @inheritdoc
      */
-    public function getAccessRules()
+    protected function getAccessRules()
     {
         return [
             ['permission' => ManageSpaces::class],
