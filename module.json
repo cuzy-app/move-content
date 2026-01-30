@@ -1,28 +1,28 @@
 {
-  "id": "move-content",
-  "name": "Move content and users",
-  "description": "Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.",
-  "keywords": [
-    "move",
-    "transfer",
-    "content",
-    "space",
-    "user"
-  ],
-  "version": "2.2.1",
-  "humhub": {
-    "minVersion": "1.18"
-  },
-  "homepage": "https://github.com/cuzy-app/move-content",
-  "authors": [
-    {
-      "name": "Marc FARRE",
-      "homepage": "https://marc.fun",
-      "role": "Developer"
-    }
-  ],
-  "screenshots": [
-    "resources/screen_1.png",
-    "resources/screen_2.png"
-  ]
+    "id": "move-content",
+    "name": "Move content and users",
+    "description": "Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.",
+    "keywords": [
+        "move",
+        "transfer",
+        "content",
+        "space",
+        "user"
+    ],
+    "version": "2.2.1",
+    "humhub": {
+        "minVersion": "1.18"
+    },
+    "homepage": "https://github.com/cuzy-app/move-content",
+    "authors": [
+        {
+            "name": "Marc FARRE",
+            "homepage": "https://marc.fun",
+            "role": "Developer"
+        }
+    ],
+    "screenshots": [
+        "resources/screen_1.png",
+        "resources/screen_2.png"
+    ]
 }
