@@ -1,5 +1,5 @@
 <?php
-return array (
+return [
   'All users except the owner will be removed from the source space.' => 'Watumiaji wote isipokuwa mmiliki wataondolewa kwenye nafasi ya chanzo.',
   'If unchecked, data such as calendar event participations or task assignments may be deleted.' => 'Ikiwa haijachaguliwa, data kama vile ushiriki wa tukio la kalenda au kazi za kazi zinaweza kufutwa.',
   'Move content' => 'Sogeza maudhui',
@@ -21,4 +21,4 @@ return array (
   'The user content transfer has been added to the queue' => 'Uhamisho wa maudhui ya mtumiaji umeongezwa kwenye foleni',
   'Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.' => 'Hamisha Maudhui, Maoni na Vipendwa kutoka kwa Mtumiaji au Nafasi hadi nyingine, na Watumiaji kutoka Kundi moja au Nafasi hadi nyingine.',
   'Users missing from the target space will be added with the same role.' => 'Watumiaji ambao hawapo kwenye nafasi lengwa wataongezwa kwa jukumu sawa.',
-);
+];

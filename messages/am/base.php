@@ -1,5 +1,5 @@
 <?php
-return array (
+return [
   'All users except the owner will be removed from the source space.' => 'ከባለቤቱ በስተቀር ሁሉም ተጠቃሚዎች ከምንጩ ቦታ ይወገዳሉ።',
   'If unchecked, data such as calendar event participations or task assignments may be deleted.' => 'ካልተመረጠ እንደ የቀን መቁጠሪያ ክስተት ተሳትፎ ወይም የተግባር ስራዎች ያሉ መረጃዎች ሊሰረዙ ይችላሉ።',
   'Move content' => 'ይዘትን አንቀሳቅስ',
@@ -21,4 +21,4 @@ return array (
   'The user content transfer has been added to the queue' => 'የተጠቃሚው ይዘት ዝውውሩ ወደ ወረፋው ታክሏል።',
   'Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.' => 'ይዘትን፣ አስተያየቶችን እና መውደዶችን ከአንድ ተጠቃሚ ወይም ቦታ ወደ ሌላ፣ እና ተጠቃሚዎችን ከአንድ ቡድን ወይም ቦታ ወደ ሌላ ያስተላልፉ።',
   'Users missing from the target space will be added with the same role.' => 'ከዒላማው ቦታ የጠፉ ተጠቃሚዎች በተመሳሳይ ሚና ይታከላሉ።',
-);
+];

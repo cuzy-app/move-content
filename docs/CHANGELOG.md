@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.2.2 (Unreleased)
+--------------------
+- Fix: Button text translations in configuration
+
 2.2.1 (January 26, 2026)
 --------------------
 - Fix: ShowContent model namespace

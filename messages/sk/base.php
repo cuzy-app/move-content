@@ -1,5 +1,5 @@
 <?php
-return array (
+return [
   'All users except the owner will be removed from the source space.' => 'Všetci používatelia okrem vlastníka budú odstránení zo zdrojového priestoru.',
   'If unchecked, data such as calendar event participations or task assignments may be deleted.' => 'Ak nie je začiarknuté, údaje, ako napríklad účasť na udalostiach v kalendári alebo priradenia úloh, môžu byť vymazané.',
   'Move content' => 'Presuňte obsah',
@@ -21,4 +21,4 @@ return array (
   'The user content transfer has been added to the queue' => 'Prenos používateľského obsahu bol pridaný do frontu',
   'Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.' => 'Prenášajte obsah, komentáre a hodnotenia Páči sa mi z jedného používateľa alebo priestoru na druhého a používateľov z jednej skupiny alebo priestoru do druhého.',
   'Users missing from the target space will be added with the same role.' => 'Používatelia, ktorí chýbajú v cieľovom priestore, budú pridaní s rovnakou rolou.',
-);
+];

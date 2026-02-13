@@ -41,11 +41,14 @@ $module = Yii::$app->getModule('move-content');
             </div>
 
             <div>
-                <?= Button::primary('Move content from one user to another')->link(['/move-content/user/content']) ?>
+                <?= Button::primary(Yii::t('MoveContentModule.base', 'Move content from one user to another'))
+                    ->link(['/move-content/user/content']) ?>
                 <br><br>
-                <?= Button::primary('Move content and users from one space to another')->link(['/move-content/space/content']) ?>
+                <?= Button::primary(Yii::t('MoveContentModule.base', 'Move content and users from one space to another'))
+                    ->link(['/move-content/space/content']) ?>
                 <br><br>
-                <?= Button::primary('Move users from one group to another')->link(['/move-content/user/group']) ?>
+                <?= Button::primary(Yii::t('MoveContentModule.base', 'Move users from one group to another'))
+                    ->link(['/move-content/user/group']) ?>
             </div>
         </div>
     </div>

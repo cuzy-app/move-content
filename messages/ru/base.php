@@ -1,5 +1,5 @@
 <?php
-return array (
+return [
   'All users except the owner will be removed from the source space.' => 'Все пользователи, кроме владельца, будут удалены из исходного пространства.',
   'If unchecked, data such as calendar event participations or task assignments may be deleted.' => 'Если этот флажок снят, такие данные, как участие в мероприятиях календаря или назначения задач, могут быть удалены.',
   'Move content' => 'Переместить содержимое',
@@ -21,4 +21,4 @@ return array (
   'The user content transfer has been added to the queue' => 'Передача пользовательского контента добавлена в очередь',
   'Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.' => 'Переносить контент, комментарии и отметки «Нравится» от одного Пользователя или Пространства к другому, а Пользователей из одной Группы или Пространства в другую.',
   'Users missing from the target space will be added with the same role.' => 'Пользователи, отсутствующие в целевом пространстве, будут добавлены с той же ролью.',
-);
+];

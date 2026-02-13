@@ -1,5 +1,5 @@
 <?php
-return array (
+return [
   'All users except the owner will be removed from the source space.' => 'Bydd yr holl ddefnyddwyr ac eithrio\'r perchennog yn cael eu tynnu o\'r gofod ffynhonnell.',
   'If unchecked, data such as calendar event participations or task assignments may be deleted.' => 'Os na chaiff ei wirio, mae\'n bosibl y bydd data fel cyfranogiad digwyddiadau calendr neu aseiniadau tasg yn cael eu dileu.',
   'Move content' => 'Symud cynnwys',
@@ -21,4 +21,4 @@ return array (
   'The user content transfer has been added to the queue' => 'Mae\'r trosglwyddiad cynnwys defnyddiwr wedi\'i ychwanegu at y ciw',
   'Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.' => 'Trosglwyddo Cynnwys, Sylwadau a Hoffterau o un Defnyddiwr neu Ofod i\'r llall, a Defnyddwyr o un Grŵp neu Ofod i\'r llall.',
   'Users missing from the target space will be added with the same role.' => 'Bydd defnyddwyr sydd ar goll o\'r gofod targed yn cael eu hychwanegu gyda\'r un rôl.',
-);
+];

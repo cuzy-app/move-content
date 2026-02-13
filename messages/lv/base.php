@@ -1,5 +1,5 @@
 <?php
-return array (
+return [
   'All users except the owner will be removed from the source space.' => 'Visi lietotāji, izņemot īpašnieku, tiks noņemti no avota vietas.',
   'If unchecked, data such as calendar event participations or task assignments may be deleted.' => 'Ja šī izvēles rūtiņa nav atzīmēta, var tikt dzēsti dati, piemēram, dalība kalendāra pasākumos vai uzdevumu piešķiršana.',
   'Move content' => 'Pārvietot saturu',
@@ -21,4 +21,4 @@ return array (
   'The user content transfer has been added to the queue' => 'Lietotāja satura pārsūtīšana ir pievienota rindai',
   'Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.' => 'Pārsūtiet saturu, komentārus un atzīmes Patīk no viena lietotāja vai vietas uz otru un lietotājus no vienas grupas vai vietas uz citu.',
   'Users missing from the target space will be added with the same role.' => 'Lietotāji, kas trūkst mērķa laukā, tiks pievienoti ar tādu pašu lomu.',
-);
+];

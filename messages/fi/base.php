@@ -1,5 +1,5 @@
 <?php
-return array (
+return [
   'All users except the owner will be removed from the source space.' => 'Kaikki käyttäjät omistajaa lukuun ottamatta poistetaan lähdetilasta.',
   'If unchecked, data such as calendar event participations or task assignments may be deleted.' => 'Jos tätä ei ole valittu, tiedot, kuten osallistumiset kalenteritapahtumiin tai tehtävämääritykset, voidaan poistaa.',
   'Move content' => 'Siirrä sisältöä',
@@ -21,4 +21,4 @@ return array (
   'The user content transfer has been added to the queue' => 'Käyttäjän sisällön siirto on lisätty jonoon',
   'Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.' => 'Siirrä sisältöä, kommentteja ja tykkäyksiä käyttäjältä tai tilalta toiselle ja käyttäjiä ryhmästä tai tilasta toiseen.',
   'Users missing from the target space will be added with the same role.' => 'Kohdetilasta puuttuvat käyttäjät lisätään samalla roolilla.',
-);
+];

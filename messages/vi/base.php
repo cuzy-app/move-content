@@ -1,5 +1,5 @@
 <?php
-return array (
+return [
   'All users except the owner will be removed from the source space.' => 'Tất cả người dùng ngoại trừ chủ sở hữu sẽ bị xóa khỏi không gian nguồn.',
   'If unchecked, data such as calendar event participations or task assignments may be deleted.' => 'Nếu không được chọn, dữ liệu như tham gia sự kiện trên lịch hoặc phân công nhiệm vụ có thể bị xóa.',
   'Move content' => 'Di chuyển nội dung',
@@ -21,4 +21,4 @@ return array (
   'The user content transfer has been added to the queue' => 'Chuyển nội dung người dùng đã được thêm vào hàng đợi',
   'Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.' => 'Chuyển Nội dung, Nhận xét và Lượt thích từ Người dùng hoặc Không gian này sang Người dùng hoặc Không gian khác và Người dùng từ Nhóm hoặc Không gian này sang Nhóm hoặc Không gian khác.',
   'Users missing from the target space will be added with the same role.' => 'Người dùng bị thiếu trong không gian mục tiêu sẽ được thêm vào với vai trò tương tự.',
-);
+];

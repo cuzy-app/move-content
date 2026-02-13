@@ -1,5 +1,5 @@
 <?php
-return array (
+return [
   'All users except the owner will be removed from the source space.' => 'Alle Benutzer außer dem Eigentümer werden aus dem Quellbereich entfernt.',
   'If unchecked, data such as calendar event participations or task assignments may be deleted.' => 'Wenn diese Option deaktiviert ist, werden möglicherweise Daten wie Teilnahmen an Kalenderereignissen oder Aufgabenzuweisungen gelöscht.',
   'Move content' => 'Inhalte verschieben',
@@ -21,4 +21,4 @@ return array (
   'The user content transfer has been added to the queue' => 'Die Übertragung von Benutzerinhalten wurde der Warteschlange hinzugefügt',
   'Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.' => 'Übertragen Sie Inhalte, Kommentare und Likes von einem Benutzer oder Space zu einem anderen und Benutzer von einer Gruppe oder einem Space zu einem anderen.',
   'Users missing from the target space will be added with the same role.' => 'Benutzer, die im Zielbereich fehlen, werden mit derselben Rolle hinzugefügt.',
-);
+];

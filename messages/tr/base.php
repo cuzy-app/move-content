@@ -1,5 +1,5 @@
 <?php
-return array (
+return [
   'All users except the owner will be removed from the source space.' => 'Sahip dışındaki tüm kullanıcılar kaynak alandan kaldırılacaktır.',
   'If unchecked, data such as calendar event participations or task assignments may be deleted.' => 'İşaretlenmezse takvim etkinliği katılımları veya görev atamaları gibi veriler silinebilir.',
   'Move content' => 'İçeriği taşı',
@@ -21,4 +21,4 @@ return array (
   'The user content transfer has been added to the queue' => 'Kullanıcı içerik aktarımı kuyruğa eklendi',
   'Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.' => 'İçeriği, Yorumları ve Beğenileri bir Kullanıcıdan veya Alandan diğerine ve Kullanıcıları bir Gruptan veya Alandan diğerine aktarın.',
   'Users missing from the target space will be added with the same role.' => 'Hedef alanda eksik olan kullanıcılar aynı rolle eklenecektir.',
-);
+];

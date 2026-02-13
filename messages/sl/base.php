@@ -1,5 +1,5 @@
 <?php
-return array (
+return [
   'All users except the owner will be removed from the source space.' => 'Vsi uporabniki razen lastnika bodo odstranjeni iz izvornega prostora.',
   'If unchecked, data such as calendar event participations or task assignments may be deleted.' => 'Če ni označeno, se lahko izbrišejo podatki, kot so udeležbe na koledarskih dogodkih ali dodelitve nalog.',
   'Move content' => 'Premakni vsebino',
@@ -21,4 +21,4 @@ return array (
   'The user content transfer has been added to the queue' => 'Prenos uporabniške vsebine je dodan v čakalno vrsto',
   'Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.' => 'Prenesite vsebino, komentarje in všečke od enega uporabnika ali prostora do drugega ter uporabnike iz ene skupine ali prostora v drugega.',
   'Users missing from the target space will be added with the same role.' => 'Uporabniki, ki manjkajo v ciljnem prostoru, bodo dodani z isto vlogo.',
-);
+];

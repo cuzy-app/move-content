@@ -1,5 +1,5 @@
 <?php
-return array (
+return [
   'All users except the owner will be removed from the source space.' => 'Alle brukere unntatt eieren vil bli fjernet fra kildeområdet.',
   'If unchecked, data such as calendar event participations or task assignments may be deleted.' => 'Hvis det ikke er merket av, kan data som deltakelse i kalenderbegivenheter eller oppgavetildelinger bli slettet.',
   'Move content' => 'Flytt innhold',
@@ -21,4 +21,4 @@ return array (
   'The user content transfer has been added to the queue' => 'Overføringen av brukerinnhold er lagt til i køen',
   'Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.' => 'Overfør innhold, kommentarer og liker fra en bruker eller plass til en annen, og brukere fra en gruppe eller plass til en annen.',
   'Users missing from the target space will be added with the same role.' => 'Brukere som mangler fra målområdet vil bli lagt til med samme rolle.',
-);
+];

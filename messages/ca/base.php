@@ -1,5 +1,5 @@
 <?php
-return array (
+return [
   'All users except the owner will be removed from the source space.' => 'Tots els usuaris, excepte el propietari, seran eliminats de l\'espai d\'origen.',
   'If unchecked, data such as calendar event participations or task assignments may be deleted.' => 'Si no està marcada, es poden suprimir dades com ara les participacions d\'esdeveniments del calendari o les assignacions de tasques.',
   'Move content' => 'Mou contingut',
@@ -21,4 +21,4 @@ return array (
   'The user content transfer has been added to the queue' => 'La transferència de contingut d\'usuari s\'ha afegit a la cua',
   'Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.' => 'Transferir contingut, comentaris i m\'agrada d\'un usuari o espai a un altre, i usuaris d\'un grup o espai a un altre.',
   'Users missing from the target space will be added with the same role.' => 'Els usuaris que faltin a l\'espai de destinació s\'afegiran amb el mateix rol.',
-);
+];

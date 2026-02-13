@@ -1,5 +1,5 @@
 <?php
-return array (
+return [
   'All users except the owner will be removed from the source space.' => '除所有者之外的所有使用者將從來源空間中刪除。',
   'If unchecked, data such as calendar event participations or task assignments may be deleted.' => '如果未選中，則可能會刪除日曆事件參與或任務分配等資料。',
   'Move content' => '移動內容',
@@ -21,4 +21,4 @@ return array (
   'The user content transfer has been added to the queue' => '用戶內容傳輸已添加到隊列中',
   'Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.' => '將內容、評論和喜歡從一個使用者或空間轉移到另一個使用者或空間，並將使用者從一個群組或空間轉移到另一個。',
   'Users missing from the target space will be added with the same role.' => '目標空間中缺少的使用者將被加入為具有相同的角色。',
-);
+];

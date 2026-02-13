@@ -1,5 +1,5 @@
 <?php
-return array (
+return [
   'All users except the owner will be removed from the source space.' => 'Visi vartotojai, išskyrus savininką, bus pašalinti iš šaltinio vietos.',
   'If unchecked, data such as calendar event participations or task assignments may be deleted.' => 'Jei nepažymėta, tokie duomenys kaip dalyvavimas kalendoriaus įvykiuose arba užduočių priskyrimas gali būti ištrinti.',
   'Move content' => 'Perkelti turinį',
@@ -21,4 +21,4 @@ return array (
   'The user content transfer has been added to the queue' => 'Vartotojo turinio perdavimas buvo įtrauktas į eilę',
   'Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.' => 'Perkelkite turinį, komentarus ir patinkančius mygtukus iš vieno vartotojo ar erdvės kitam, o vartotojus iš vienos grupės ar erdvės į kitą.',
   'Users missing from the target space will be added with the same role.' => 'Naudotojams, kurių trūksta tikslinėje erdvėje, bus suteiktas toks pat vaidmuo.',
-);
+];

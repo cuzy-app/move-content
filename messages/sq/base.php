@@ -1,5 +1,5 @@
 <?php
-return array (
+return [
   'All users except the owner will be removed from the source space.' => 'Të gjithë përdoruesit përveç pronarit do të hiqen nga hapësira burimore.',
   'If unchecked, data such as calendar event participations or task assignments may be deleted.' => 'Nëse nuk është zgjedhur, të dhënat si p.sh. pjesëmarrjet në ngjarje në kalendar ose caktimet e detyrave mund të fshihen.',
   'Move content' => 'Lëvizni përmbajtjen',
@@ -21,4 +21,4 @@ return array (
   'The user content transfer has been added to the queue' => 'Transferimi i përmbajtjes së përdoruesit është shtuar në radhë',
   'Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.' => 'Transferoni përmbajtjen, komentet dhe pëlqimet nga një përdorues ose hapësirë në një tjetër dhe përdoruesit nga një grup ose hapësirë në tjetrën.',
   'Users missing from the target space will be added with the same role.' => 'Përdoruesit që mungojnë nga hapësira e synuar do të shtohen me të njëjtin rol.',
-);
+];

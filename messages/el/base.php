@@ -1,5 +1,5 @@
 <?php
-return array (
+return [
   'All users except the owner will be removed from the source space.' => 'Όλοι οι χρήστες εκτός από τον κάτοχο θα αφαιρεθούν από τον χώρο προέλευσης.',
   'If unchecked, data such as calendar event participations or task assignments may be deleted.' => 'Εάν δεν είναι επιλεγμένο, δεδομένα όπως συμμετοχές συμβάντων ημερολογίου ή αναθέσεις εργασιών ενδέχεται να διαγραφούν.',
   'Move content' => 'Μετακίνηση περιεχομένου',
@@ -21,4 +21,4 @@ return array (
   'The user content transfer has been added to the queue' => 'Η μεταφορά περιεχομένου χρήστη έχει προστεθεί στην ουρά',
   'Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.' => 'Μεταφέρετε περιεχόμενο, σχόλια και επισημάνσεις "Μου αρέσει" από έναν χρήστη ή χώρο σε άλλο και χρήστες από μια ομάδα ή χώρο σε άλλη.',
   'Users missing from the target space will be added with the same role.' => 'Οι χρήστες που λείπουν από τον χώρο προορισμού θα προστεθούν με τον ίδιο ρόλο.',
-);
+];

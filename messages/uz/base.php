@@ -1,5 +1,5 @@
 <?php
-return array (
+return [
   'All users except the owner will be removed from the source space.' => 'Egasidan tashqari barcha foydalanuvchilar manba maydonidan olib tashlanadi.',
   'If unchecked, data such as calendar event participations or task assignments may be deleted.' => 'Belgilanmagan bo\'lsa, taqvimdagi tadbir ishtiroklari yoki topshiriqlar kabi ma\'lumotlar o\'chirilishi mumkin.',
   'Move content' => 'Kontentni ko\'chirish',
@@ -21,4 +21,4 @@ return array (
   'The user content transfer has been added to the queue' => 'Foydalanuvchi kontentini uzatish navbatga qo\'shildi',
   'Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.' => 'Kontent, sharhlar va yoqtirishlarni bir foydalanuvchi yoki bo\'shliqdan boshqasiga, foydalanuvchilarni esa bir guruh yoki bo\'shliqdan boshqasiga o\'tkazing.',
   'Users missing from the target space will be added with the same role.' => 'Maqsadli bo\'shliqda etishmayotgan foydalanuvchilar bir xil rol bilan qo\'shiladi.',
-);
+];

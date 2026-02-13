@@ -1,5 +1,5 @@
 <?php
-return array (
+return [
   'All users except the owner will be removed from the source space.' => 'Erabiltzaile guztiak jabea izan ezik iturburu-espaziotik kenduko dira.',
   'If unchecked, data such as calendar event participations or task assignments may be deleted.' => 'Hautatzen ez bada, egutegiko gertaeren parte-hartzeak edo zereginen esleipenak bezalako datuak ezaba daitezke.',
   'Move content' => 'Mugitu edukia',
@@ -21,4 +21,4 @@ return array (
   'The user content transfer has been added to the queue' => 'Erabiltzaileen edukien transferentzia ilaran gehitu da',
   'Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.' => 'Erabiltzaile edo Espazio batetik bestera Edukia, Iruzkinak eta Atseginak transferitu, eta Erabiltzaileak Talde edo Espazio batetik bestera.',
   'Users missing from the target space will be added with the same role.' => 'Helburuko espazioan falta diren erabiltzaileak rol berdinarekin gehituko dira.',
-);
+];

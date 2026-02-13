@@ -1,5 +1,5 @@
 <?php
-return array (
+return [
   'All users except the owner will be removed from the source space.' => 'A tulajdonos kivételével minden felhasználó el lesz távolítva a forrásterületről.',
   'If unchecked, data such as calendar event participations or task assignments may be deleted.' => 'Ha nincs bejelölve, akkor az olyan adatok, mint például a naptári eseményeken való részvétel vagy a feladat-hozzárendelések törlődnek.',
   'Move content' => 'Tartalom áthelyezése',
@@ -21,4 +21,4 @@ return array (
   'The user content transfer has been added to the queue' => 'A felhasználói tartalom átvitele hozzáadásra került a sorhoz',
   'Transfer Content, Comments and Likes from one User or Space to another, and Users from one Group or Space to another.' => 'Tartalom, megjegyzések és tetszésnyilvánítás átvitele egyik felhasználóról vagy térről a másikra, a felhasználók pedig egyik csoportból vagy térből a másikba.',
   'Users missing from the target space will be added with the same role.' => 'A célterületről hiányzó felhasználók ugyanazzal a szerepkörrel kerülnek hozzáadásra.',
-);
+];
