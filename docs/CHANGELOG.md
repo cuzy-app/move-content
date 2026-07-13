@@ -1,9 +1,10 @@
 Changelog
 =========
 
-2.2.2 (Unreleased)
+2.3.0 (Unreleased)
 --------------------
 - Fix: Button text translations in configuration
+- Fix: Compatibility with HumHub 1.19
 
 2.2.1 (January 26, 2026)
 --------------------
