@@ -1,6 +1,11 @@
 {
   "name": "cuzy-app/move-content",
   "type": "humhub-module",
+  "autoload": {
+    "psr-4": {
+      "humhub\\modules\\moveContent\\": ""
+    }
+  },
   "config": {
     "platform": {
       "php": "8.2"
