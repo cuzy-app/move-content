@@ -31,6 +31,8 @@ use humhub\modules\helloasso\models\HelloassoForm;
 use humhub\modules\helloasso\models\HelloassoItem;
 use humhub\modules\helloasso\models\HelloassoPayer;
 use humhub\modules\like\models\Like;
+use humhub\modules\lms\models\Announcement;
+use humhub\modules\lms\models\Course;
 use humhub\modules\mass_notification\models\MassNotification;
 use humhub\modules\nextcloud\models\NextcloudActivity;
 use humhub\modules\nextcloud\models\NextcloudShareApiLog;
@@ -77,8 +79,9 @@ class MoveUserContentJob extends LongRunningActiveJob
     protected array $errors = [];
 
     /**
-     * Tables where created_by must be updated
-     */
+     * Models extending `ActiveRecord` and having `created_by` column
+     * because it must be updated after moving
+    */
     protected const NON_CONTENT_CLASSES = [
         Group::class,
         GroupUser::class,
@@ -111,6 +114,8 @@ class MoveUserContentJob extends LongRunningActiveJob
         SpacesMap::class,
         NextcloudShareApiLog::class,
         NextcloudActivity::class,
+        Announcement::class,
+        Course::class,
 
         // Content Active Records
         Like::class,
