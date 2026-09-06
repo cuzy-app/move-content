@@ -30,6 +30,8 @@ use humhub\modules\eventsManager\models\EventSpeaker;
 use humhub\modules\helloasso\models\HelloassoForm;
 use humhub\modules\helloasso\models\HelloassoItem;
 use humhub\modules\helloasso\models\HelloassoPayer;
+use humhub\modules\helpdesk\models\Tag;
+use humhub\modules\helpdesk\models\TicketNote;
 use humhub\modules\like\models\Like;
 use humhub\modules\lms\models\Announcement;
 use humhub\modules\lms\models\Course;
@@ -116,6 +118,8 @@ class MoveUserContentJob extends LongRunningActiveJob
         NextcloudActivity::class,
         Announcement::class,
         Course::class,
+        Tag::class,
+        TicketNote::class,
 
         // Content Active Records
         Like::class,
