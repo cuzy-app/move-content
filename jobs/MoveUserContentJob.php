@@ -45,6 +45,9 @@ use humhub\modules\queue\LongRunningActiveJob;
 use humhub\modules\reaction\models\Reaction;
 use humhub\modules\reportcontent\models\ReportContent;
 use humhub\modules\show_content\models\ShowContent;
+use humhub\modules\sMSVerify\models\SmsVerification;
+use humhub\modules\sMSVerify\models\SmsVerifyChallenge;
+use humhub\modules\sMSVerify\models\SmsVerifySendLog;
 use humhub\modules\spacesMap\models\SpacesMap;
 use humhub\modules\survey\models\Answer;
 use humhub\modules\survey\models\Field;
@@ -120,6 +123,9 @@ class MoveUserContentJob extends LongRunningActiveJob
         Course::class,
         Tag::class,
         TicketNote::class,
+        SmsVerification::class,
+        SmsVerifyChallenge::class,
+        SmsVerifySendLog::class,
 
         // Content Active Records
         Like::class,
