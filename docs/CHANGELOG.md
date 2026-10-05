@@ -1,8 +1,8 @@
 Changelog
 =========
 
-2.2.2 (Unreleased)
---------------------
+2.2.2 (October 5, 2026)
+-----------------------
 - Fix: Button text translations in configuration
 - Fix: Minor cleanup of model validation rules.
 
