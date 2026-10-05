@@ -1,8 +1,8 @@
 Changelog
 =========
 
-2.3.1 (Unreleased)
-------------------
+2.3.1 (October 5, 2026)
+-----------------------
 - Fix: Minor cleanup of model validation rules.
 
 2.3.0 (July 16, 2026)
