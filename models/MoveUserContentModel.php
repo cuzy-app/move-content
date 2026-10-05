@@ -10,6 +10,7 @@
 namespace humhub\modules\moveContent\models;
 
 use humhub\modules\moveContent\jobs\MoveUserContentJob;
+use humhub\modules\user\models\User;
 use Yii;
 use yii\base\Model;
 
@@ -50,8 +51,18 @@ class MoveUserContentModel extends Model
         return [
             [['sourceUserGuid', 'targetUserGuid'], 'required'],
             [['sourceUserGuid', 'targetUserGuid'], 'safe'],
+            [['sourceUserGuid', 'targetUserGuid'], 'validateUser'],
             [['moveProfileContent'], 'boolean'],
         ];
+    }
+
+    public function validateUser($attribute): void
+    {
+        $guid = is_array($this->$attribute) ? reset($this->$attribute) : $this->$attribute;
+        $user = User::findOne(['guid' => $guid]);
+        if ($user === null || ($user->isSystemAdmin() && !Yii::$app->user->isAdmin())) {
+            $this->addError($attribute, Yii::t('MoveContentModule.base', 'Invalid user'));
+        }
     }
 
     public function beforeValidate()

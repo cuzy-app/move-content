@@ -9,7 +9,9 @@
 
 namespace humhub\modules\moveContent\models;
 
+use humhub\modules\admin\permissions\ManageSpaces;
 use humhub\modules\moveContent\jobs\MoveUsersJob;
+use humhub\modules\user\models\Group;
 use Yii;
 use yii\base\Model;
 
@@ -55,8 +57,25 @@ class MoveUsersModel extends Model
     {
         return [
             [['sourceGroupId', 'targetGroupId'], 'integer'],
+            [['sourceGroupId', 'targetGroupId'], 'validateGroup'],
             [['sourceSpaceGuid', 'targetSpaceGuid'], 'safe'],
+            [['sourceSpaceGuid', 'targetSpaceGuid'], 'validateSpace'],
         ];
+    }
+
+    public function validateGroup($attribute): void
+    {
+        $group = Group::findOne($this->$attribute);
+        if ($group === null || !$group->canManage()) {
+            $this->addError($attribute, Yii::t('MoveContentModule.base', 'Invalid group'));
+        }
+    }
+
+    public function validateSpace($attribute): void
+    {
+        if (!Yii::$app->user->can(ManageSpaces::class)) {
+            $this->addError($attribute, Yii::t('MoveContentModule.base', 'Invalid space'));
+        }
     }
 
     public function beforeValidate()
