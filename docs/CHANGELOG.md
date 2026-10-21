@@ -1,10 +1,14 @@
 Changelog
 =========
 
-2.2.2 (October 5, 2026)
+2.3.1 (October 5, 2026)
 -----------------------
-- Fix: Button text translations in configuration
 - Fix: Minor cleanup of model validation rules.
+
+2.3.0 (July 16, 2026)
+--------------------
+- Fix: Button text translations in configuration
+- Fix: Compatibility with HumHub 1.19
 
 2.2.1 (January 26, 2026)
 --------------------
