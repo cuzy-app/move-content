@@ -6,7 +6,7 @@
  * @author [Marc FARRE](https://marc.fun)
  */
 
-use humhub\modules\moveContent\models\MoveUserContentModel;
+use humhub\modules\moveContent\models\MoveSpaceContentModel;
 use humhub\modules\space\widgets\SpacePickerField;
 use humhub\widgets\form\ActiveForm;
 use humhub\components\View;
@@ -14,7 +14,7 @@ use humhub\widgets\bootstrap\Button;
 
 /**
  * @var $this View
- * @var $model MoveUserContentModel
+ * @var $model MoveSpaceContentModel
  * @var $title string
  */
 ?>
@@ -36,7 +36,8 @@ use humhub\widgets\bootstrap\Button;
         'attribute' => 'targetSpaceGuid',
         'maxSelection' => 1,
     ]) ?>
-    <?= $form->field($model, 'moveUsers')->checkbox() ?>
+    <?= $form->field($model, 'moveContent')->checkbox() ?>
+    <?= $form->field($model, 'moveMembers')->checkbox() ?>
 
     <?= Button::save()->submit() ?>
     <?php ActiveForm::end(); ?>

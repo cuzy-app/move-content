@@ -36,7 +36,8 @@ class MoveSpaceContentJob extends LongRunningActiveJob
      * @var string Space guid
      */
     public $targetSpaceGuid;
-    public bool $moveUsers = false;
+    public bool $moveContent = true;
+    public bool $moveMembers = false;
     protected int $nbContentMoved = 0;
     protected array $errors = [];
 
@@ -53,11 +54,13 @@ class MoveSpaceContentJob extends LongRunningActiveJob
             return;
         }
 
-        if ($this->moveUsers) {
+        if ($this->moveMembers) {
             $this->addUsers($sourceSpace, $targetSpace);
         }
-        $this->moveContent($sourceSpace, $targetSpace);
-        if ($this->moveUsers) {
+        if ($this->moveContent) {
+            $this->moveContent($sourceSpace, $targetSpace);
+        }
+        if ($this->moveMembers) {
             $this->removeUsers($sourceSpace);
         }
 

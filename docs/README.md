@@ -17,6 +17,16 @@ Use cases:
 
 - Go to `Administration` -> `Users` or `Space` -> `Move content`
 
+### Moving a Space
+
+When moving a Space into another, choose what to move (at least one option is required):
+- **Move the Space content**: all content (with comments, likes and files) and topics are moved to the target Space. Modules needed by this content are enabled on the target Space. Topics with the same name are merged, and wiki pages having the same title as an existing one are renamed.
+- **Move the Space members**: all members except the owner are removed from the source Space, and those missing from the target Space are added with the same role.
+
+If the content is moved without the members, data such as calendar event participations or task assignments may be deleted.
+
+If the members are moved without the content, the content stays in the source Space: the removed members may no longer access it if the Space is private, and data such as their task assignments in the source Space are deleted.
+
 ## Pricing
 
 This module is free, but the result of a lot of work for design and maintenance over time.

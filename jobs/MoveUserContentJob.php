@@ -176,17 +176,14 @@ class MoveUserContentJob extends LongRunningActiveJob
                 continue;
             }
 
-            // Change creator
-            $this->content->created_by = $targetUser->id;
-            if ($this->content->updateAttributes(['created_by'])) { // Don't replace with ->save() to avoid updated_at and stream_sort_date to be updated
-                $this->nbContentMoved++;
+            // Change creator (content created by other users in the source user profile keeps its creator)
+            if ($this->content->created_by === $sourceUser->id) {
+                $this->content->created_by = $targetUser->id;
+                if ($this->content->updateAttributes(['created_by'])) { // Don't replace with ->save() to avoid updated_at and stream_sort_date to be updated
+                    $this->nbContentMoved++;
 
-                if (property_exists($this->model, 'created_by')) {
-                    $this->model->created_by = $targetUser->id;
-                    $scenarios = $this->model->scenarios();
-                    $scenario = $this->model->getScenario();
-                    if (isset($scenarios[$scenario])) {
-                        $this->model->save();
+                    if ($this->model->hasAttribute('created_by')) {
+                        $this->model->updateAttributes(['created_by' => $targetUser->id]);
                     }
                 }
             }

@@ -1,6 +1,14 @@
 Changelog
 =========
 
+2.3.2 (Unreleased)
+-----------------------
+- Enh: When moving a Space, replace the "Move users also" checkbox with "Move the Space content" and "Move the Space members" checkboxes, allowing to move the members only
+- Fix: When moving content from a user to another, the author of content posted by other users in the source user profile was changed
+- Fix: When moving content from a user to another, the author stored in the content record (e.g. the post) was not updated
+- Fix: Users moved from one group to another were notified if the group notifies its users and the job was run by a logged-in user
+- Enh: Add unit tests
+
 2.3.1 (October 5, 2026)
 -----------------------
 - Fix: Minor cleanup of model validation rules.

@@ -65,6 +65,10 @@ class MoveUsersJob extends LongRunningActiveJob
             return;
         }
 
+        // Don't notify users of being moved (not saved, only for this job)
+        $sourceGroup->notify_users = 0;
+        $targetGroup->notify_users = 0;
+
         /** @var User $user */
         foreach ($sourceGroup->getUsers()->each() as $user) {
             if (!$targetGroup->isMember($user)) {
