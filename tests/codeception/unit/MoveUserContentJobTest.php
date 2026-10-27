@@ -68,6 +68,8 @@ class MoveUserContentJobTest extends HumHubDbTestCase
     public function testMoveContentChangesAuthorsWithoutLosingContent(): void
     {
         $items = $this->createSourceContent();
+        // Old dates, so that any update during the move is detected
+        Content::updateAll(['stream_sort_date' => '2020-01-01 00:00:00']);
         $contentBefore = Content::find()->indexBy('id')->asArray()->all();
         $sourceContentIds = array_map('intval', Content::find()->select('id')->where(['created_by' => self::SOURCE_USER_ID])->column());
         $this->assertNotEmpty($sourceContentIds);

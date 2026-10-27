@@ -232,12 +232,8 @@ class MoveUserContentJob extends LongRunningActiveJob
             }
             $query = $class::find()->where(['created_by' => $sourceUser->id]);
             foreach ($query->each(1000) as $record) {
-                $record->created_by = $targetUser->id;
-                if ($record->save()) {
-                    $nbRecordsMoved++;
-                } else {
-                    $this->errors[] = $class . ' record ID ' . $record->id . ': ' . implode(' ', $record->getErrorSummary(true));
-                }
+                // Don't replace with ->save() to avoid side effects such as comments and likes updating the content stream_sort_date
+                $nbRecordsMoved += $record->updateAttributes(['created_by' => $targetUser->id]);
             }
         }
 

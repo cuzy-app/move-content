@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.4.1 (October 27, 2026)
+-----------------------
+- Fix: When moving content from a user to another, the contents commented or liked by the source user were moved to the top of the streams sorted by update date
+
 2.4.0 (October 27, 2026)
 -----------------------
 - Enh: When moving a Space, replace the "Move users also" checkbox with "Move the Space content" and "Move the Space members" checkboxes, allowing to move the members only
