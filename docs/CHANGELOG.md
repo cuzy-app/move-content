@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.3.2 (Unreleased)
+2.4.0 (October 27, 2026)
 -----------------------
 - Enh: When moving a Space, replace the "Move users also" checkbox with "Move the Space content" and "Move the Space members" checkboxes, allowing to move the members only
 - Fix: When moving content from a user to another, the author of content posted by other users in the source user profile was changed
