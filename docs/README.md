@@ -44,3 +44,7 @@ https://github.com/cuzy-app/move-content
 ## Licence
 
 [GNU AGPL](https://github.com/cuzy-app/move-content/blob/master/docs/LICENCE.md)
+
+## Hosting
+
+This module is installed and updated for you on [CUZY Hosting](https://www.cuzy.app/hosting), managed HumHub hosting with every CUZY module included.
