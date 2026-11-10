@@ -39,7 +39,7 @@ https://github.com/cuzy-app/move-content
 
 ## Publisher
 
-[CUZY.APP](https://www.cuzy.app/)
+[CUZY.app](https://www.cuzy.app)
 
 ## Licence
 
