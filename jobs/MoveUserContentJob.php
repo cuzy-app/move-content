@@ -222,19 +222,18 @@ class MoveUserContentJob extends LongRunningActiveJob
         $nbRecordsMoved = 0;
         $errors = [];
 
-        foreach (self::NON_CONTENT_CLASSES as $class) {
+        foreach (static::NON_CONTENT_CLASSES as $class) {
             if (
                 !class_exists($class)
                 || !method_exists($class, 'tableName')
                 || !Yii::$app->db->getTableSchema($class::tableName()) // In case the module is installed, but disabled
+                || !Yii::$app->db->getTableSchema($class::tableName())->getColumn('created_by') // E.g. sms_verify has no created_by column
             ) {
                 continue;
             }
-            $query = $class::find()->where(['created_by' => $sourceUser->id]);
-            foreach ($query->each(1000) as $record) {
-                // Don't replace with ->save() to avoid side effects such as comments and likes updating the content stream_sort_date
-                $nbRecordsMoved += $record->updateAttributes(['created_by' => $targetUser->id]);
-            }
+            // One UPDATE per class instead of one per record. Don't replace with ->save() to avoid side effects
+            // such as comments and likes updating the content stream_sort_date
+            $nbRecordsMoved += $class::updateAll(['created_by' => $targetUser->id], ['created_by' => $sourceUser->id]);
         }
 
         // Log result
@@ -246,25 +245,14 @@ class MoveUserContentJob extends LongRunningActiveJob
 
     private function moveFiles(User $sourceUser, User $targetUser)
     {
-        $nbFilesMoved = 0;
-        $errors = [];
-
-        foreach (\humhub\modules\file\models\File::find()->each(1000) as $file) {
-            if ($file->created_by === $sourceUser->id) {
-                $file->created_by = $targetUser->id;
-                if ($file->save()) {
-                    $nbFilesMoved++;
-                } else {
-                    $this->errors[] = 'File ID ' . $file->id . ': ' . implode(' ', $file->getErrorSummary(true));
-                }
-            }
-        }
+        // One UPDATE filtered by the author, instead of loading every file of the platform and filtering in PHP
+        $nbFilesMoved = \humhub\modules\file\models\File::updateAll(
+            ['created_by' => $targetUser->id],
+            ['created_by' => $sourceUser->id],
+        );
 
         // Log result
         Yii::warning($nbFilesMoved . ' files have been transferred to user "' . $targetUser->username . '"', 'move-content');
-        if ($errors) {
-            Yii::error('Errors while transferring files to user "' . $targetUser->username . '": ' . implode(' | ', $errors), 'move-content');
-        }
     }
 
     /**
