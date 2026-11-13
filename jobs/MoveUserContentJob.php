@@ -60,6 +60,7 @@ use humhub\modules\user\models\User;
 use humhub\modules\userCleanup\models\UserCleanup;
 use humhub\modules\virusScanner\models\VirusFile;
 use Yii;
+use yii\db\IntegrityException;
 
 class MoveUserContentJob extends LongRunningActiveJob
 {
@@ -233,7 +234,23 @@ class MoveUserContentJob extends LongRunningActiveJob
             }
             // One UPDATE per class instead of one per record. Don't replace with ->save() to avoid side effects
             // such as comments and likes updating the content stream_sort_date
-            $nbRecordsMoved += $class::updateAll(['created_by' => $targetUser->id], ['created_by' => $sourceUser->id]);
+            try {
+                $nbRecordsMoved += $class::updateAll(['created_by' => $targetUser->id], ['created_by' => $sourceUser->id]);
+            } catch (IntegrityException) {
+                // A unique key includes created_by (e.g. a like or reaction the target user already made on the same
+                // content): move the records one by one, and drop the source user's copy of each duplicate
+                foreach ($class::find()->where(['created_by' => $sourceUser->id])->each(1000) as $record) {
+                    try {
+                        $nbRecordsMoved += $record->updateAttributes(['created_by' => $targetUser->id]);
+                    } catch (IntegrityException) {
+                        try {
+                            $record->delete();
+                        } catch (\Throwable $e) {
+                            $errors[] = $class . ' #' . implode('-', (array)$record->getPrimaryKey()) . ': ' . $e->getMessage();
+                        }
+                    }
+                }
+            }
         }
 
         // Log result

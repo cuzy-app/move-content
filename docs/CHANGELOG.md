@@ -6,6 +6,7 @@ Changelog
 - Fix: Reviewed French, German, Spanish, Portuguese, Brazilian Portuguese, Italian and Dutch translations (wrong meanings, HumHub terminology, consistent wording and form of address); Traditional Chinese is now actually in Traditional Chinese and Norwegian Nynorsk in Nynorsk (they were copies of Simplified Chinese and Bokmål)
 - Enh: Transferring a user's files and records (comments, likes, orders, …) to another user runs one update per table, instead of loading every file of the platform and updating the records one by one
 - Fix: Transferring a user's content failed with "Unknown column 'created_by'" when the SMS Verify module is installed (its verification table has no author column)
+- Fix: Transferring a user's records failed when the target user had already liked or reacted to the same content or comment as the source user; the source user's duplicate like or reaction is now removed instead
 
 2.4.1 (October 27, 2026)
 -----------------------

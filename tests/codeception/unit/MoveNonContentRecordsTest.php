@@ -9,7 +9,10 @@
 
 namespace humhub\modules\moveContent\tests\codeception\unit;
 
+use humhub\models\RecordMap;
 use humhub\modules\comment\models\Comment;
+use humhub\modules\like\models\Like;
+use humhub\modules\like\services\LikeService;
 use humhub\modules\moveContent\jobs\MoveUserContentJob;
 use humhub\modules\moveContent\tests\codeception\_support\MoveContentTestTrait;
 use humhub\modules\user\models\Password;
@@ -72,5 +75,34 @@ class MoveNonContentRecordsTest extends HumHubDbTestCase
 
         $this->assertSame($target->id, (int)Comment::find()->select('created_by')->where(['id' => $mine->id])->scalar());
         $this->assertSame((int)$other->created_by, (int)Comment::find()->select('created_by')->where(['id' => $other->id])->scalar());
+    }
+
+    public function testDuplicateOfATargetUserRecordIsMergedInsteadOfFailing(): void
+    {
+        $post = static::createPost('User2', static::reloadSpace(3), 'User2 space post');
+        $comment = static::createComment('User2', $post, 'User2 comment');
+        $otherComment = static::createComment('User2', $post, 'Another comment');
+        $source = static::reloadUser('User1');
+        $target = static::reloadUser('User3');
+
+        // Both users like the same comment (unique key: content, comment, created_by); only the source likes the other one
+        foreach ([[$source, $comment], [$target, $comment], [$source, $otherComment]] as [$user, $liked]) {
+            static::becomeUser($user->username);
+            $this->assertTrue((new LikeService(Comment::findOne($liked->id), $user))->like());
+        }
+
+        $job = new class (['sourceUserGuid' => $source->guid, 'targetUserGuid' => $target->guid]) extends MoveUserContentJob {
+            protected const NON_CONTENT_CLASSES = [Like::class];
+
+            public function moveRecords(User $source, User $target): void
+            {
+                $this->moveNonContentActiveRecords($source, $target);
+            }
+        };
+        $job->moveRecords($source, $target);
+
+        $this->assertSame(0, (int)Like::find()->where(['created_by' => $source->id])->count());
+        $this->assertSame(2, (int)Like::find()->where(['created_by' => $target->id])->count(), 'One like per comment for the target user');
+        $this->assertSame(1, (int)Like::find()->where(['created_by' => $target->id, 'content_addon_record_id' => RecordMap::getId($otherComment)])->count());
     }
 }
