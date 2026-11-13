@@ -222,7 +222,7 @@ class MoveUserContentJob extends LongRunningActiveJob
         $nbRecordsMoved = 0;
         $errors = [];
 
-        foreach (self::NON_CONTENT_CLASSES as $class) {
+        foreach (static::NON_CONTENT_CLASSES as $class) {
             if (
                 !class_exists($class)
                 || !method_exists($class, 'tableName')
