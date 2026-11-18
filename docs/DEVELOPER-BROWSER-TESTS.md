@@ -115,6 +115,11 @@ do not block the tests.
   JavaScript error or failed request (4xx/5xx) on a HumHub page is an issue, even if the page looks fine. Ignore
   the noise that is not about this module: warnings from browser extensions, third-party scripts and fonts
   blocked by your own browser, and `favicon.ico` 404s.
+- A narrow-width check that loads a page in a temporary same-origin frame ends that page's Mercure live connection
+  when the frame is removed, and HumHub then logs `humhub.modules.live.mercure: Mercure error` once per frame
+  removed. These are not findings: report a Mercure error only when it appears on a page loaded normally, without
+  any frame. Do not probe `/.well-known/mercure` by hand: a request without parameters always answers 400
+  `missing "match" subscription parameter`, which says nothing about the site.
 - Check each screen at 1440 px and 390 px wide (responsive mode), unless the test says otherwise. These exact
   widths are not always possible (the screen is smaller than the window you need, or the browser cannot be resized
   or emulated): when one is not possible, use the closest width you can get (as wide as possible for 1440, as
