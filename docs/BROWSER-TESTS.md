@@ -7,6 +7,9 @@ agent that drives a browser, covering exactly that. Run it on a test instance **
 after an upgrade of a module this one depends on (theme, other modules listed in `module.json`), and before a
 release that changes JS, CSS or views.
 
+When the tests pass after a change of the module's UI, the module screenshots may need to be retaken: see
+[When to retake the screenshots](#when-to-retake-the-screenshots).
+
 Duration: about 15 minutes for the full run; about 5 minutes for the **quick run**, which is made of the tests marked `[quick]` and is enough after a core upgrade.
 
 ## Running the tests with Claude Code and Claude in Chrome
@@ -26,16 +29,13 @@ screenshots by hand:
 Prompt to copy and paste into Claude Code:
 
 ```text
-Run the browser tests of docs/DEVELOPER-BROWSER-TESTS.md on the HumHub instance open in Chrome, by driving
+Run the browser tests of docs/BROWSER-TESTS.md on the HumHub instance open in Chrome, by driving
 Claude in Chrome (with a Claude Sonnet model).
 
-Before starting, ask me these two questions and wait for my answers:
-- Should the module screenshots (`resources/screen_*.png`, listed in `module.json`) be retaken? If yes, all of
-  them, or which ones?
-- Should the full tests be run (e.g. after a major core upgrade), or only the tests where something might have
-  broken since a previous version? In that case, since which version? Then analyze `docs/CHANGELOG.md` and the
-  commits since that version (`git log v<version>..HEAD`), tell me which tests you will run and why, and run only
-  those (plus the setup and the `[quick]` tests).
+Before starting, ask me this question and wait for my answer: should the full tests be run (e.g. after a major
+core upgrade), or only the tests where something might have broken since a previous version? In that case, since
+which version? Then analyze `docs/CHANGELOG.md` and the commits since that version (`git log v<version>..HEAD`),
+tell me which tests you will run and why, and run only those (plus the setup and the `[quick]` tests).
 
 Then:
 
@@ -50,15 +50,24 @@ Then:
    each issue is really fixed. Fix what is still broken, or what the fix broke.
 5. Repeat steps 2 to 4 until every issue is fixed. After 3 retests with issues still open, stop and ask me
    whether to continue.
-6. If I asked for new screenshots, have Claude in Chrome retake them once all issues are fixed (same pages,
-   names and sizes as the current ones, 1:1 pixel, showing realistic data without the `QA ` or `[TEST]` test names) and replace the files
-   in `resources/`.
-7. At the end, give me the list of the issues found and fixed (with the files changed), the issues left open, and
-   the steps skipped because they need a human.
+6. At the end, give me the list of the issues found and fixed (with the files changed), the issues left open, and
+   the steps skipped because they need a human. If a fix or a change since the last release changed what the
+   module screenshots show, tell me which ones should be retaken (see docs/SCREENSHOTS.md).
 ```
 
 Some steps still need a human (for example a native browser dialog): the agent asks, or skips them and lists them
 as skipped in the report.
+
+## When to retake the screenshots
+
+The module screenshots (`resources/screen_*.png`, listed in `module.json`) are shown in the marketplace. Retake
+the ones concerned, once the browser tests pass, when:
+
+- the module's UI changed: a new feature, a moved or renamed menu entry, button or field, a new layout;
+- a HumHub core or theme upgrade changed the look of the module's pages;
+- a screenshot no longer matches the current texts or translations.
+
+How to plan, prepare and take them: [SCREENSHOTS.md](SCREENSHOTS.md).
 
 ---
 
